@@ -29,6 +29,7 @@ ctd: click through delta (time to click the button) / TODO: Big number if not cl
 VERSION = 1
 MODEL_NAME = "optimusai"
 MODEL_PATH = "trained_model"
+SAVE_PATH = MODEL_PATH + "/" + MODEL_NAME
 
 ## NN Params
 test_size = 0.3
@@ -50,7 +51,7 @@ lo_nodes = 400
 
 ### Input Layer
 with tf.variable_scope("inputs"):
-    X = tf.get_variable(tf.float32, shape = [None, n_inputs], name = 'input')
+    X = tf.placeholder(tf.float32, shape = [None, n_inputs], name = 'input')
 
 with tf.variable_scope("layer1"):
     weights = tf.get_variable(name = 'w1', shape = [n_inputs,l1_nodes], initializer = tf.contrib.layers.xavier_initializer())
@@ -100,16 +101,39 @@ with tf.variable_scope("optimizer"):
 raw_data = pd.read_csv("inputs/raw_data.csv", index_col = 0)
 in_scaler, out_scaler, le_txt = h.encoders(raw_data)
 
+# Look for preexisting model
 checkpoint = tf.train.latest_checkpoint(MODEL_PATH)
 should_train = checkpoint == None
 
 with tf.Session() as session:
     if should_train:
-        print("Training")
+        print("Started training")
+        session.run(tf.global_variables_initializer())
         saver = tf.train.Saver()
 
-        # Split training and testing
+        # Ingest and Split training and testing
         in_scaled, out_scaled = h.preprocess_training(raw_data, le_txt, in_scaler, out_scaler) #TO BE removed
         in_training, in_test, out_training, out_test = h.training_test(in_scaled, out_scaled, out_scaler, test_size)
 
-        session.run(optimizer)
+        for epoch in range(n_epochs):
+            session.run(optimizer, feed_dict={X:in_training, Y:out_training})
+
+            if epoch%100==0:
+                training_cost= session.run(cost, feed_dict={X: in_training, Y: out_training})
+                testing_cost= session.run(cost, feed_dict={X: in_test, Y: out_test})
+                print("PASS: {} || Training accuracy: {:0.2f}% | Training accuracy: {:0.2f}%".format(epoch, 100*(1-training_cost), 100*(1-testing_cost)))
+            
+            print("Training complete")
+            params_saver = saver.save(session, SAVE_PATH)   
+    else: 
+        print("Restoring model")
+        # Importing the graph
+        graph = tf.get_default_graph()
+        saver = tf.train.import_meta_graph(checkpoint + '.meta')
+        # Importing the params
+        saver.restore(session, checkpoint)
+
+        test_input = [1,1,1,1,1,1,1]
+        print("Executing the model for str({})".format(test_input))
+        ctd = np.array(out_scaler.inverse_transform(session.run(prediction, feed_dict={'inputs/input:0'})))
+        print("Predicted ctd of {:0.2f}".format(ctd))
