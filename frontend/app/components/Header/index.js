@@ -1,32 +1,22 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import styled from 'styled-components';
+import { colors } from '../../global-styles';
 
-import A from './A';
-import Img from './Img';
-import NavBar from './NavBar';
-import HeaderLink from './HeaderLink';
-import Banner from './banner.jpg';
-import messages from './messages';
+const HeaderSt = styled.header`
+  display: flex;
+  align-items: center;
+  height: 68px;
+  width: 100%;
+  padding: 0 24px;
+  color: #fff;
+  background-image: ${colors.primaryGradient};
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+`;
 
-/* eslint-disable react/prefer-stateless-function */
-class Header extends React.Component {
-  render() {
-    return (
-      <div>
-        <A href="https://twitter.com/mxstbr">
-          <Img src={Banner} alt="react-boilerplate - Logo" />
-        </A>
-        <NavBar>
-          <HeaderLink to="/">
-            <FormattedMessage {...messages.home} />
-          </HeaderLink>
-          <HeaderLink to="/features">
-            <FormattedMessage {...messages.features} />
-          </HeaderLink>
-        </NavBar>
-      </div>
-    );
-  }
-}
+const Header = () => (
+  <HeaderSt>
+    <span>OptimusSite</span>
+  </HeaderSt>
+);
 
 export default Header;
