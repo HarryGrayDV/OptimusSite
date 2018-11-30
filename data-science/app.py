@@ -1,6 +1,7 @@
 #!/usr/bin/python
 """Main Flask to return ."""
 from flask import Flask
+from optimizer.models import ModelOptimizer
 
 app = Flask(__name__)
 
@@ -9,6 +10,23 @@ app = Flask(__name__)
 def train_model():
     """Train the Model."""
     # start the training
+
+    return 'Succesfull', 200
+
+
+@app.route('/predict/', methods=['POST'])
+def predict_model():
+    """Predict based on the parameters."""
+    # get the json params from the request (no error checking right now)
+    params = request.get_json()
+
+    return 'Succesfull', 200
+
+
+@app.route('/optimize/', methods=['GET'])
+def optimize_model():
+    """Optimize model by running all of the params."""
+    ModelOptimizer()
 
     return 'Succesfull', 200
 
