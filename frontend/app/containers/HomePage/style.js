@@ -23,8 +23,34 @@ const InsightsSt = styled.div`
   left: 100%;
   width: 300px;
   height: calc(100% - 48px);
+  display: flex;
+  flex-direction: column;
   background-color: ${colors.tertiary};
   box-shadow: 0 22px 64px 0 rgba(0, 0, 0, 0.08);
+  color: #fff;
+  padding: 24px;
+
+  h2 {
+    margin-top: 0;
+  }
+
+  ul {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+    hr {
+      opacity: 0.2;
+    }
+  }
 `;
 
-export { HomeSt, ResultsSt, InsightsSt };
+const ControlSt = styled.div`
+  text-align: center;
+`;
+
+export { HomeSt, ResultsSt, InsightsSt, ControlSt };
