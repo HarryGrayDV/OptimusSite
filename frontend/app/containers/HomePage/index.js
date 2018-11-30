@@ -14,7 +14,9 @@ import Header from '../../components/Header';
 import Slider from '../../components/Slider';
 import PlayPause from '../../components/PlayPause';
 
-import { HomeSt, ResultsSt, InsightsSt, ControlSt } from './style';
+import results from '../../images/results.png';
+
+import { HomeSt, ResultsSt, ResultSt, InsightsSt, ControlSt } from './style';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class HomePage extends React.PureComponent {
@@ -25,6 +27,9 @@ export default class HomePage extends React.PureComponent {
         <HomeSt>
           <div>
             <ResultsSt>
+              <ResultSt>
+                <img src={results} alt="Results" />
+              </ResultSt>
               <InsightsSt>
                 <h2>INSIGHTS</h2>
                 <ul>
