@@ -10,11 +10,21 @@ const HomeSt = styled.main`
 
 const ResultsSt = styled.div`
   position: relative;
-  width: 1000px;
-  height: 624px;
-  background: #ffffff;
-  box-shadow: 0 22px 64px 0 rgba(0, 0, 0, 0.08);
   transform: translateX(-150px);
+`;
+
+const ResultSt = styled.div`
+  width: 900px;
+  height: 600px;
+  padding: 24px;
+  background: #ffffff;
+  box-shadow: 0 22px 64px 0 rgba(0, 0, 0, 0.15);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 `;
 
 const InsightsSt = styled.div`
@@ -26,7 +36,7 @@ const InsightsSt = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${colors.tertiary};
-  box-shadow: 0 22px 64px 0 rgba(0, 0, 0, 0.08);
+  box-shadow: 0 22px 64px 0 rgba(0, 0, 0, 0.15);
   color: #fff;
   padding: 24px;
 
@@ -53,4 +63,4 @@ const ControlSt = styled.div`
   text-align: center;
 `;
 
-export { HomeSt, ResultsSt, InsightsSt, ControlSt };
+export { HomeSt, ResultsSt, ResultSt, InsightsSt, ControlSt };

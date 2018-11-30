@@ -3,7 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 const colors = {
   primary: '#4CBBD2',
   primaryGradient:
-    'linear-gradient(-135deg, #3EACCE 0%, #5ACAD5 53%, #49CAC3 100%)',
+    'linear-gradient(135deg, #3EACCE 0%, #5ACAD5 53%, #49CAC3 100%)',
   secondary: '#8ABAC4',
   tertiary: '#483547',
 };
@@ -30,7 +30,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #app {
-    background-color: #fafafa;
+    background-color: #e0e0e0;
     min-height: 100%;
     min-width: 100%;
   }
