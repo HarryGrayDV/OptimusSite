@@ -12,9 +12,6 @@ gem "interactor", "~> 3.0"
 # Database
 gem 'pg', '>= 0.18', '< 2.0'
 
-# Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.1.0', require: false
-
 # Handling CORS
 gem 'rack-cors'
 
