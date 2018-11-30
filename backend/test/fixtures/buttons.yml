@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  text: MyString
+  colour_h: 1
+  colour_s: 1
+  colour_l: 1
+  width: 1
+  height: 1
+  position: 1
+  click_through_delta: 1
+
+two:
+  text: MyString
+  colour_h: 1
+  colour_s: 1
+  colour_l: 1
+  width: 1
+  height: 1
+  position: 1
+  click_through_delta: 1
