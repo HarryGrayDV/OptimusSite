@@ -15,6 +15,10 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
   }
 
+  * {
+    box-sizing: border-box;
+  }
+
   body {
     font-family: 'Muli', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
