@@ -79,12 +79,21 @@ with tf.variable_scope("layer4"):
 
     l4_out = tf.nn.relu(tf.matmul(l3_drop, weights) + biases, name= 'l4_output')
 
+### Output Layer
 with tf.variable_scope("output"):
     l4_drop = dropout(l4_out, keep_prob)
     weights = tf.get_variable(name = 'wo', shape = [l4_drop,lo_nodes], initializer = tf.contrib.layers.xavier_initializer())
     biases = tf.get_variable(name = 'bo', shape = [lo_nodes], initializer = tf.zeros_initializer())
 
     prediction = tf.add(tf.matmul(l4_drop, weights), biases, name='prediction')
+
+### Optimizer and Cost
+with tf.variable_scope("cost"):
+    Y = tf.placeholder(tf.float32, shape = [None, 1], name = 'target')
+    cost = tf.reduce_mean(tf.squared_difference(prediction, Y), name = 'cost')
+
+with tf.variable_scope("optimizer"):
+    optimizer = tf.train.AdamOptimizer(learning_rate).minimize(cost)
 
 # PREPROCESSING
 
@@ -102,3 +111,5 @@ with tf.Session() as session:
         # Split training and testing
         in_scaled, out_scaled = h.preprocess_training(raw_data, le_txt, in_scaler, out_scaler) #TO BE removed
         in_training, in_test, out_training, out_test = h.training_test(in_scaled, out_scaled, out_scaler, test_size)
+
+        session.run(optimizer)
