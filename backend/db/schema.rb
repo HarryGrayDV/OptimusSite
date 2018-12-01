@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_01_045931) do
+ActiveRecord::Schema.define(version: 2018_12_01_172930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,13 +18,21 @@ ActiveRecord::Schema.define(version: 2018_12_01_045931) do
   create_table "buttons", force: :cascade do |t|
     t.string "text"
     t.integer "position"
-    t.integer "click_through_delta"
+    t.integer "ctd"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean "mobile"
+    t.integer "age"
+    t.integer "gender"
+    t.integer "region"
+    t.boolean "synthetic"
+  end
+
+  create_table "models", force: :cascade do |t|
+    t.jsonb "combination"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "mobile"
-    t.integer "age"
-    t.string "gender"
-    t.string "region"
   end
 
 end

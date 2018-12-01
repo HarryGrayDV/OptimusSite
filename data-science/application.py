@@ -1,6 +1,7 @@
 #!/usr/bin/python
 """Main Flask to return ."""
 from flask import Flask
+from inputs.randomizer import SyntheticData
 from optimizer.models import ModelOptimizer
 from src.models import TrainModel
 
@@ -12,6 +13,14 @@ def train_model():
     """Train the Model."""
     # start the training
     TrainModel()
+    return 'Succesfull', 200
+
+
+@app.route('/synthetic/<int:n>/', methods=['GET'])
+def add_synthetic(n):
+    """Create synthetic data."""
+    # start the training
+    SyntheticData(n=n)
     return 'Succesfull', 200
 
 
