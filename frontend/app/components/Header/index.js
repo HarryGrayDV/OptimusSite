@@ -12,6 +12,10 @@ const HeaderSt = styled.header`
   color: #fff;
   background: ${props => (props.generic ? '#888' : colors.primaryGradient)};
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+
+  a {
+    color: #fff;
+  }
 `;
 
 const Header = ({ generic, children }) => (

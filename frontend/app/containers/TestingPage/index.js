@@ -43,7 +43,6 @@ const ButtonSt = styled.button`
   );
 `;
 
-/* eslint-disable react/prefer-stateless-function */
 export default class TestingPage extends React.PureComponent {
   constructor() {
     super();
