@@ -83,3 +83,4 @@ production:
   database: optimus-site-api_production
   username: optimus-site-api
   password: <%= ENV['OPTIMUS-SITE-API_DATABASE_PASSWORD'] %>
+  port: 8080
