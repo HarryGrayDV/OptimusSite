@@ -1,8 +1,14 @@
 import styled from 'styled-components';
+import { media } from '../../global-styles';
 
 const TestingSt = styled.div`
   background-color: #f8f4f0;
   min-height: 100vh;
+
+  ${media.phone`
+    position: relative;
+    overflow-x: hidden;
+  `};
 
   h1,
   h2,
@@ -16,22 +22,45 @@ const TestingSt = styled.div`
     flex-direction: row;
     align-items: center;
     margin-left: -128px;
+
+    ${media.phone`
+      flex-direction: column;
+      margin: 0;
+    `};
   }
 
   main {
     margin: 0 auto;
     max-width: 960px;
+
+    ${media.phone`
+      padding: 24px;
+    `};
   }
 
   .product {
     display: flex;
     flex-direction: column;
+
+    ${media.phone`
+      img {
+        position: relative;
+        z-index: 1;
+        max-width: 100%;
+      }
+    `};
   }
 
   .info {
     width: 380px;
     margin-left: 128px;
     font-weight: 300;
+
+    ${media.phone`
+      margin: 0;
+      width: 100%;
+      padding: 24px;
+    `};
 
     h1 {
       font-size: 52px;
@@ -66,6 +95,10 @@ const TestingSt = styled.div`
     right: 0;
     bottom: 0;
     width: 120px;
+
+    ${media.phone`
+      display: none;
+    `};
   }
 
   .stroke {
@@ -93,6 +126,7 @@ const MenuSt = styled.div`
   padding: 0 34px;
   background-color: #fff;
   align-items: center;
+  z-index: 1;
   box-shadow: 0 2px 64px 0 rgba(0, 0, 0, 0.25);
 `;
 
