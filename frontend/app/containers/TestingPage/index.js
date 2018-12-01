@@ -1,52 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
-
-const TestingSt = styled.div`
-  h1,
-  h2,
-  h3,
-  .heading {
-    font-family: 'Playfair display', serif;
-  }
-
-  background-color: #f8f4f0;
-  min-height: 100vh;
-`;
-
-const MenuSt = styled.div`
-  position: relative;
-  width: 200px;
-  height: 128px;
-  display: flex;
-  flex-direction: row;
-  padding: 0 34px;
-  background-color: #fff;
-  align-items: center;
-  box-shadow: 0 2px 64px 0 rgba(0, 0, 0, 0.1);
-`;
-
-const LogoSt = styled.div`
-  position: absolute;
-  right: -78px;
-
-  span:not(.heading) {
-    position: absolute;
-    top: -8px;
-    left: -6px;
-    font-size: 22px;
-  }
-
-  .heading {
-    font-size: 52px;
-    font-weight: bold;
-  }
-`;
-
-// const ButtonSt = styled.button`
-//   color: #fff;
-//   background-color: #777;
-//   padding: 12px;
-// `;
+import rating from '../../images/rating.svg';
+import product from '../../images/product.png';
+import journey from '../../images/journey.png';
+import stroke1 from '../../images/stroke-1.png';
+import stroke2 from '../../images/stroke-2.png';
+import { TestingSt, MenuSt, LogoSt, ButtonSt } from './style';
 
 export default class TestingPage extends React.PureComponent {
   constructor() {
@@ -88,26 +46,38 @@ export default class TestingPage extends React.PureComponent {
           </LogoSt>
         </MenuSt>
         <main>
-          <div className="hero">
-            <h1>BMW 330i</h1>
-            <p>Oh what a bloody beauty. I bet you want it.</p>
-          </div>
-          <div className="info">
-            <p>
-              Built with pure elegance at its core, the e45 BMW 330i is a
-              monster, a machine, a matriarch, and a bloody beast of a bastard
-            </p>
-            <p>
-              Don't you try and tell me this concept doesn't tickle you right in
-              the bloody pickle because I won't flipping believe you.
-            </p>
-          </div>
-          <div className="three">
-            <div>Yeah you know I'm going to do it - no 'ragrets' ya know</div>
-            <div>Can you believe how unique this pattern is? I can't.</div>
-            <div>Three is a magic number and you feel the spiritual energy</div>
+          <div className="container">
+            <div className="product">
+              <img alt="La Flaque de Boue" src={product} />
+              {position === 1 && <ButtonSt type="button">{text}</ButtonSt>}
+            </div>
+            <div className="info">
+              <span>La Flaque</span>
+              <h1>de boue</h1>
+              <div className="rating">
+                <img src={rating} alt="Rating" />
+              </div>
+              <p>
+                Experience true freshness with La Flaque’s flagship new flavour
+                - &nbsp;
+                <strong>de boue</strong>.
+              </p>
+              <p>
+                Stirring up dreamy memories of Parisian summers,&nbsp;
+                <strong>de boue</strong> hits the perfect spot between fizz and
+                flavour.
+              </p>
+              <p>
+                You’d be a <strong>‘fou’</strong> to miss it.
+              </p>
+              <span className="price">$2.40 / can</span>
+              {position === 0 && <ButtonSt type="button">{text}</ButtonSt>}
+            </div>
           </div>
         </main>
+        <img className="journey" src={journey} alt="Journey of la Flaque" />
+        <img className="stroke stroke1" src={stroke1} alt="Paint stroke" />
+        <img className="stroke stroke2" src={stroke2} alt="Paint stroke" />
       </TestingSt>
     );
   }
