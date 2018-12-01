@@ -29,6 +29,18 @@ def preprocess_training(raw_data, le_txt, in_scaler, out_scaler):
     return in_scaled, out_scaled
 
 
+def preprocess_predict(raw_data, le_txt, in_scaler):
+    # Separate inputs from outputs in training dataset
+    raw_data['text'] = le_txt.fit_transform(raw_data['text'])
+
+    inputs = raw_data.values
+
+    # Scale both the training inputs and outputs
+    in_scaled = in_scaler.fit_transform(inputs)
+
+    return in_scaled
+
+
 def training_test(in_scaled, out_scaled, out_scaler, size):
     in_training, in_test, out_training, out_test = train_test_split(
         in_scaled, out_scaled, test_size=size)

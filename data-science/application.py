@@ -2,8 +2,7 @@
 """Main Flask to return ."""
 from flask import Flask
 from inputs.randomizer import SyntheticData
-from optimizer.models import ModelOptimizer
-from src.models import TrainModel
+from src.models import ModelOptimizer, TrainModel
 
 app = Flask(__name__)
 
@@ -24,13 +23,13 @@ def add_synthetic(n):
     return 'Succesfull', 200
 
 
-@app.route('/predict/', methods=['POST'])
-def predict_model():
-    """Predict based on the parameters."""
-    # get the json params from the request (no error checking right now)
-    params = request.get_json()
-
-    return 'Succesfull', 200
+# @app.route('/predict/', methods=['POST'])
+# def predict_model():
+#     """Predict based on the parameters."""
+#     # get the json params from the request (no error checking right now)
+#     params = request.get_json()
+#
+#     return 'Succesfull', 200
 
 
 @app.route('/optimize/', methods=['GET'])

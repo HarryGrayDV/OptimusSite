@@ -11,7 +11,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 # ENVIRONMENT VARS
 VERSION = 1
 MODEL_NAME = "optimusai"
-MODEL_PATH = "trained_model"
+MODEL_PATH = "trained_models"
 SAVE_PATH = MODEL_PATH + "/" + MODEL_NAME
 # NN Params
 test_size = 0.3
@@ -124,15 +124,16 @@ def run_training(in_scaled, out_scaled, in_scaler, out_scaler, le_txt):
         params_saver = saver.save(session, SAVE_PATH)
 
 
-def run_prediction(in_scaled, out_scaled, in_scaler, out_scaler, le_txt, checkpoint):
+def run_prediction(in_scaled, in_scaler, le_txt, model_version):
     print("Restoring model")
     # Importing the graph
     graph = tf.get_default_graph()
 
     with tf.Session() as session:
-        saver = tf.train.import_meta_graph(checkpoint + '.meta')
+        saver = tf.train.import_meta_graph(
+            "{}/{}.meta".format(MODEL_PATH, model_version))
         # Importing the params
-        saver.restore(session, checkpoint)
+        saver.restore(session, model_version)
 
         test_input_raw = ["get involved!", 1, 1, 24, 1, 3]
         print("Executing the model for str({})".format(test_input_raw))
