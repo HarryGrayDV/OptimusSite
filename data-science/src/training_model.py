@@ -105,9 +105,6 @@ def run_training(in_scaled, out_scaled, in_scaler, out_scaler, le_txt):
         in_training, in_test, out_training, out_test = h.training_test(
             in_scaled, out_scaled, out_scaler, test_size)
 
-        print(in_training.shape)
-        print(out_training.shape)
-
         for epoch in range(n_epochs):
             session.run(optimizer, feed_dict={
                         X: in_training, Y: out_training})
@@ -126,21 +123,25 @@ def run_training(in_scaled, out_scaled, in_scaler, out_scaler, le_txt):
 
 def run_prediction(in_scaled, in_scaler, le_txt, model_version):
     print("Restoring model")
-    # Importing the graph
-    graph = tf.get_default_graph()
+    checkpoint = tf.train.latest_checkpoint(MODEL_PATH)
+    should_train = checkpoint == None
+    print(checkpoint)
 
     with tf.Session() as session:
-        saver = tf.train.import_meta_graph(
-            "{}/{}.meta".format(MODEL_PATH, model_version))
-        # Importing the params
-        saver.restore(session, model_version)
+        session.run(tf.global_variables_initializer())
 
-        test_input_raw = ["get involved!", 1, 1, 24, 1, 3]
-        print("Executing the model for str({})".format(test_input_raw))
-        test_input = test_input_raw
-        test_input[0] = le_txt.fit_transform([test_input_raw[0]])[0]
-        scaled_input = in_scaler.fit_transform([test_input])
-        ctd = np.array(out_scaler.inverse_transform(session.run(
-            prediction, feed_dict={'inputs/input:0': scaled_input})))[0][0]
-        print(ctd)
-        print("Predicted ctd of {:0.2f}".format(ctd))
+        # Importing the graph
+        graph = tf.get_default_graph()
+        saver = tf.train.import_meta_graph(checkpoint + '.meta')
+        # Importing the params
+        saver.restore(session, checkpoint)
+
+        # test_input_raw = ["get involved!", 1, 1, 24, 1, 3]
+        # print("Executing the model for str({})".format(test_input_raw))
+        # test_input = test_input_raw
+        # test_input[0] = le_txt.fit_transform([test_input_raw[0]])[0]
+        # scaled_input = in_scaler.fit_transform([test_input])
+        # ctd = np.array(out_scaler.inverse_transform(session.run(
+        #     prediction, feed_dict={'inputs/input:0': scaled_input})))[0][0]
+        # print(ctd)
+        # print("Predicted ctd of {:0.2f}".format(ctd))
