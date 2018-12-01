@@ -23,7 +23,9 @@ export default class HomePage extends React.PureComponent {
   render() {
     return (
       <>
-        <Header />
+        <Header>
+          <span>OptimusSite</span>
+        </Header>
         <HomeSt>
           <div>
             <ResultsSt>
