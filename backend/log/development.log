@@ -1,0 +1,130 @@
+  [1m[35m (486.1ms)[0m  [1m[35mCREATE DATABASE "optimus-site-api_development" ENCODING = 'unicode'[0m
+  ↳ bin/rails:9
+  [1m[35m (421.4ms)[0m  [1m[35mCREATE DATABASE "optimus-site-api_test" ENCODING = 'unicode'[0m
+  ↳ bin/rails:9
+  [1m[35m (6.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  ↳ bin/rails:9
+  [1m[35m (4.5ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  ↳ bin/rails:9
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(6420278694242605500)[0m
+  ↳ bin/rails:9
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ bin/rails:9
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2018-11-30 21:43:07.974790"], ["updated_at", "2018-11-30 21:43:07.974790"]]
+  ↳ bin/rails:9
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_advisory_unlock(6420278694242605500)[0m
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "buttons"[0m
+Started POST "/buttons" for 127.0.0.1 at 2018-11-30 15:16:39 -0800
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/cheah_geoffrey/.rbenv/versions/2.5.1/lib/ruby/gems/2.5.0/gems/activerecord-5.2.1.1/lib/active_record/log_subscriber.rb:98
+Processing by ButtonsController#create as */*
+  Parameters: {"text"=>"Sign Up", "colour_h"=>300, "colour_s"=>150, "colour_l"=>110, "width"=>100, "height"=>50, "position"=>4, "click_through_delta"=>5, "button"=>{"text"=>"Sign Up", "colour_h"=>300, "colour_s"=>150, "colour_l"=>110, "width"=>100, "height"=>50, "position"=>4, "click_through_delta"=>5}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/buttons_controller.rb:10
+  [1m[36mButton Create (0.4ms)[0m  [1m[32mINSERT INTO "buttons" ("text", "colour_h", "colour_s", "colour_l", "width", "height", "position", "click_through_delta", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING "id"[0m  [["text", "Sign Up"], ["colour_h", 300], ["colour_s", 150], ["colour_l", 110], ["width", 100], ["height", 50], ["position", 4], ["click_through_delta", 5], ["created_at", "2018-11-30 23:16:39.480969"], ["updated_at", "2018-11-30 23:16:39.480969"]]
+  ↳ app/controllers/buttons_controller.rb:10
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/buttons_controller.rb:10
+Completed 200 OK in 12ms (Views: 0.4ms | ActiveRecord: 4.2ms)
+
+
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE DATABASE "optimus-site-api_development" ENCODING = 'unicode'[0m
+  ↳ bin/rails:9
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE DATABASE "optimus-site-api_test" ENCODING = 'unicode'[0m
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(6420278694242605500)[0m
+  ↳ bin/rails:9
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+Migrating to CreateButtons (20181130214635)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ bin/rails:9
+  [1m[35m (3.3ms)[0m  [1m[35mCREATE TABLE "buttons" ("id" bigserial primary key, "text" character varying, "colour_h" integer, "colour_s" integer, "colour_l" integer, "width" integer, "height" integer, "position" integer, "click_through_delta" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  ↳ db/migrate/20181130214635_create_buttons.rb:3
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ bin/rails:9
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(6420278694242605500)[0m
+  ↳ bin/rails:9
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  ↳ bin/rails:9
+  [1m[35m (209.5ms)[0m  [1m[35mDROP DATABASE IF EXISTS "optimus-site-api_development"[0m
+  ↳ bin/rails:9
+  [1m[35m (208.6ms)[0m  [1m[35mDROP DATABASE IF EXISTS "optimus-site-api_test"[0m
+  ↳ bin/rails:9
+  [1m[35m (347.9ms)[0m  [1m[35mCREATE DATABASE "optimus-site-api_development" ENCODING = 'unicode'[0m
+  ↳ bin/rails:9
+  [1m[35m (404.6ms)[0m  [1m[35mCREATE DATABASE "optimus-site-api_test" ENCODING = 'unicode'[0m
+  ↳ bin/rails:9
+  [1m[35m (3.9ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  ↳ bin/rails:9
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(6420278694242605500)[0m
+  ↳ bin/rails:9
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+Migrating to CreateButtons (20181130214635)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ bin/rails:9
+  [1m[35m (2.8ms)[0m  [1m[35mCREATE TABLE "buttons" ("id" bigserial primary key, "text" character varying, "colour_h" integer, "colour_s" integer, "colour_l" integer, "width" integer, "height" integer, "position" integer, "click_through_delta" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  ↳ db/migrate/20181130214635_create_buttons.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20181130214635"]]
+  ↳ bin/rails:9
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ bin/rails:9
+Migrating to UpdateButtonsTable (20181201045931)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ bin/rails:9
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "buttons" DROP COLUMN "colour_h"[0m
+  ↳ db/migrate/20181201045931_update_buttons_table.rb:3
+  [1m[35m (0.1ms)[0m  [1m[35mALTER TABLE "buttons" DROP COLUMN "colour_s"[0m
+  ↳ db/migrate/20181201045931_update_buttons_table.rb:4
+  [1m[35m (0.1ms)[0m  [1m[35mALTER TABLE "buttons" DROP COLUMN "colour_l"[0m
+  ↳ db/migrate/20181201045931_update_buttons_table.rb:5
+  [1m[35m (0.1ms)[0m  [1m[35mALTER TABLE "buttons" DROP COLUMN "width"[0m
+  ↳ db/migrate/20181201045931_update_buttons_table.rb:6
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "buttons" DROP COLUMN "height"[0m
+  ↳ db/migrate/20181201045931_update_buttons_table.rb:7
+  [1m[35m (0.1ms)[0m  [1m[35mALTER TABLE "buttons" ADD "mobile" boolean[0m
+  ↳ db/migrate/20181201045931_update_buttons_table.rb:9
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "buttons" ADD "age" integer[0m
+  ↳ db/migrate/20181201045931_update_buttons_table.rb:10
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "buttons" ADD "gender" character varying[0m
+  ↳ db/migrate/20181201045931_update_buttons_table.rb:11
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "buttons" ADD "region" character varying[0m
+  ↳ db/migrate/20181201045931_update_buttons_table.rb:12
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20181201045931"]]
+  ↳ bin/rails:9
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ bin/rails:9
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ bin/rails:9
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2018-12-01 05:18:28.242474"], ["updated_at", "2018-12-01 05:18:28.242474"]]
+  ↳ bin/rails:9
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ bin/rails:9
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(6420278694242605500)[0m
+  ↳ bin/rails:9
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
