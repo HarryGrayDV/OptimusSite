@@ -2,6 +2,7 @@
 """Main Flask to return ."""
 from flask import Flask
 from optimizer.models import ModelOptimizer
+from src.models import TrainModel
 
 app = Flask(__name__)
 
@@ -10,7 +11,7 @@ app = Flask(__name__)
 def train_model():
     """Train the Model."""
     # start the training
-
+    TrainModel()
     return 'Succesfull', 200
 
 
