@@ -6,8 +6,8 @@ ruby '2.5.3'
 # Core
 gem 'rails', '~> 5.2.1', '>= 5.2.1.1'
 gem 'puma', '~> 3.11'
-#  To handle business logic and great for refactoring
-gem "interactor", "~> 3.0"
+#  What we would use later to handle business logic, refactoring out of controller
+# gem "interactor", "~> 3.0"
 
 # Database
 gem 'pg', '>= 0.18', '< 2.0'
