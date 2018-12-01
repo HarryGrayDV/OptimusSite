@@ -28,6 +28,7 @@ const ResultSt = styled.div`
     width: 100%;
     height: 100%;
     object-fit: contain;
+    border: 2px solid ${colors.tertiary};
   }
 `;
 
