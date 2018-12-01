@@ -5,7 +5,7 @@ global:
   application_name:       optimus-site
   default_ec2_keyname:    null
   default_platform:       64bit Amazon Linux 2018.03 v2.7.6 running Python 3.6
-  default_region:         eu-west-2
+  default_region:         eu-east-1
   include_git_submodules: true
   instance_profile:       null
   platform_name:          null
