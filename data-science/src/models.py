@@ -29,7 +29,7 @@ class TrainModel():
         """Load the data from the database."""
         self.data = pd.read_sql(
             "SELECT * FROM {}".format(self.DATA_TABLE),
-            self.db_connection.connection)
+            self.db_connection.connection, index_col='id')
 
         self.data = self.data.drop(['created_at', 'updated_at'], axis=1)
 

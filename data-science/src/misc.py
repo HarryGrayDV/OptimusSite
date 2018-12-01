@@ -3,6 +3,7 @@ import os
 import urllib.parse as urlparse
 
 import psycopg2
+from sqlalchemy import create_engine
 
 
 class DBConnection():
@@ -25,3 +26,8 @@ class DBConnection():
             host=self.HOST,
             port=self.PORT
         )
+
+    @property
+    def engine(self):
+        """Return a sqlalchemy engine."""
+        return create_engine(os.environ['DATABASE_URL'])
