@@ -17,14 +17,14 @@ SAVE_PATH = MODEL_PATH + "/" + MODEL_NAME
 test_size = 0.3
 
 learning_rate = 0.001
-n_epochs = 1500
+n_epochs = 2000
 keep_prob = 0.6
 
-n_inputs = 6
+n_inputs = 10
 n_outputs = 1
 
-l1_nodes = 4
-l2_nodes = 4
+l1_nodes = 6
+l2_nodes = 6
 
 # Graph definition
 

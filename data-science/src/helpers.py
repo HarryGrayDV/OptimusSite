@@ -2,6 +2,7 @@
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
+import src.topicmodel as tm
 
 
 def encoders(raw_data):
@@ -17,7 +18,14 @@ def encoders(raw_data):
 
 def preprocess_training(raw_data, le_txt, in_scaler, out_scaler):
     # Separate inputs from outputs in training dataset
-    raw_data['text'] = le_txt.fit_transform(raw_data['text'])
+    #raw_data['text'] = le_txt.fit_transform(raw_data['text'])
+    
+    text_topics = tm.topic_matcher(raw_data['text'])
+    raw_data['t0'] = text_topics['t0']
+    raw_data['t1'] = text_topics['t1']
+    raw_data['t2'] = text_topics['t2']
+    raw_data['t3'] = text_topics['t3']
+    raw_data['t4'] = text_topics['t4']
 
     inputs = raw_data.drop(['ctd'], axis=1).values
     outputs = raw_data[['ctd']].values
@@ -31,7 +39,14 @@ def preprocess_training(raw_data, le_txt, in_scaler, out_scaler):
 
 def preprocess_predict(raw_data, le_txt, in_scaler):
     # Separate inputs from outputs in training dataset
-    raw_data['text'] = le_txt.fit_transform(raw_data['text'])
+    #raw_data['text'] = le_txt.fit_transform(raw_data['text'])
+
+    text_topics = tm.topic_matcher(raw_data['text'])
+    raw_data['t0'] = text_topics['t0']
+    raw_data['t1'] = text_topics['t1']
+    raw_data['t2'] = text_topics['t2']
+    raw_data['t3'] = text_topics['t3']
+    raw_data['t4'] = text_topics['t4']
 
     inputs = raw_data.values
 

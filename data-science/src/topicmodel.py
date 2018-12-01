@@ -10,9 +10,10 @@ import gensim
 from gensim import corpora
 from gensim.models.coherencemodel import CoherenceModel
 
-PATH = 'nlp/inputs.csv'
-def topic_matcher(PATH,other_texts)
+
+def topic_matcher(other_texts)
     # Import and read the csv file
+    PATH = 'inputs_tweets.csv'
     ifile  = open(PATH, "r")
     read = csv.reader(ifile)
     doc_complete = []
