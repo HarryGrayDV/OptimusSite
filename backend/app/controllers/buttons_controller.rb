@@ -17,6 +17,6 @@ class ButtonsController < ApplicationController
   private
 
   def button_params
-    params.require(:button).permit(:text, :colour_h, :colour_s, :colour_l, :width, :height, :position, :click_through_delta)
+    params.require(:button).permit(:position, :text, :mobile, :age, :gender, :region, :ctd, :synthetic)
   end
 end
