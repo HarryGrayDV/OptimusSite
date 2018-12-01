@@ -9,6 +9,7 @@ name = "pypi"
 "psycopg2-binary" = "*"
 tensorflow = "*"
 flask = "*"
+scikit-learn = "*"
 
 [requires]
 python_version = "3.7"

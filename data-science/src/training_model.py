@@ -29,23 +29,19 @@ ctd: click through delta (time to click the button) / TODO: Big number if not cl
 VERSION = 1
 MODEL_NAME = "optimusai"
 MODEL_PATH = "trained_model"
-SAVE_PATH = MODEL_PATH + "/" + MODEL_NAME + "/" + VERSION
-
+SAVE_PATH = MODEL_PATH + "/" + MODEL_NAME
 ## NN Params
 test_size = 0.3
 
 learning_rate = 0.001
 n_epochs = 2000
-keep_prob = 0.6
+keep_prob = 1
 
-n_inputs = 7
+n_inputs = 6
 n_outputs = 1
 
-l1_nodes = 400
-l2_nodes = 400
-l3_nodes = 400
-l4_nodes = 400
-lo_nodes = 400
+l1_nodes = 4
+l2_nodes = 4
 
 ## Graph definition
 
@@ -61,32 +57,18 @@ with tf.variable_scope("layer1"):
 
 with tf.variable_scope("layer2"):
     l1_drop = dropout(l1_out, keep_prob)
-    weights = tf.get_variable(name = 'w2', shape = [l1_drop,l2_nodes], initializer = tf.contrib.layers.xavier_initializer())
+    weights = tf.get_variable(name = 'w2', shape = [l1_nodes,l2_nodes], initializer = tf.contrib.layers.xavier_initializer())
     biases = tf.get_variable(name = 'b2', shape = [l2_nodes], initializer = tf.zeros_initializer())
 
     l2_out = tf.nn.relu(tf.matmul(l1_drop, weights) + biases, name= 'l2_output')
 
-with tf.variable_scope("layer3"):
-    l2_drop = dropout(l2_out, keep_prob)
-    weights = tf.get_variable(name = 'w3', shape = [l2_drop,l3_nodes], initializer = tf.contrib.layers.xavier_initializer())
-    biases = tf.get_variable(name = 'b3', shape = [l3_nodes], initializer = tf.zeros_initializer())
-
-    l3_out = tf.nn.relu(tf.matmul(l2_drop, weights) + biases, name= 'l3_output')
-
-with tf.variable_scope("layer4"):
-    l3_drop = dropout(l3_out, keep_prob)
-    weights = tf.get_variable(name = 'w4', shape = [l3_drop,l4_nodes], initializer = tf.contrib.layers.xavier_initializer())
-    biases = tf.get_variable(name = 'b4', shape = [l4_nodes], initializer = tf.zeros_initializer())
-
-    l4_out = tf.nn.relu(tf.matmul(l3_drop, weights) + biases, name= 'l4_output')
-
 ### Output Layer
 with tf.variable_scope("output"):
-    l4_drop = dropout(l4_out, keep_prob)
-    weights = tf.get_variable(name = 'wo', shape = [l4_drop,lo_nodes], initializer = tf.contrib.layers.xavier_initializer())
-    biases = tf.get_variable(name = 'bo', shape = [lo_nodes], initializer = tf.zeros_initializer())
+    l2_drop = dropout(l2_out, keep_prob)
+    weights = tf.get_variable(name = 'wo', shape = [l2_nodes,n_outputs], initializer = tf.contrib.layers.xavier_initializer())
+    biases = tf.get_variable(name = 'bo', shape = [n_outputs], initializer = tf.zeros_initializer())
 
-    prediction = tf.add(tf.matmul(l4_drop, weights), biases, name='prediction')
+    prediction = tf.add(tf.matmul(l2_drop, weights), biases, name='prediction')
 
 ### Optimizer and Cost
 with tf.variable_scope("cost"):
@@ -100,21 +82,21 @@ with tf.variable_scope("optimizer"):
 
 raw_data = pd.read_csv("inputs/raw_data.csv", index_col = 0)
 in_scaler, out_scaler, le_txt = h.encoders(raw_data)
+in_scaled, out_scaled = h.preprocess_training(raw_data, le_txt, in_scaler, out_scaler) #TO BE removed
 
 # Look for preexisting model
-checkpoint = tf.train.latest_checkpoint(SAVE_PATH)
+checkpoint = tf.train.latest_checkpoint(MODEL_PATH)
 should_train = checkpoint == None
 
 with tf.Session() as session:
+    session.run(tf.global_variables_initializer())
+
     if should_train:
         print("Started training")
-        session.run(tf.global_variables_initializer())
         saver = tf.train.Saver()
 
         # Ingest and Split training and testing
-        in_scaled, out_scaled = h.preprocess_training(raw_data, le_txt, in_scaler, out_scaler) #TO BE removed
         in_training, in_test, out_training, out_test = h.training_test(in_scaled, out_scaled, out_scaler, test_size)
-
         for epoch in range(n_epochs):
             session.run(optimizer, feed_dict={X:in_training, Y:out_training})
 
@@ -123,8 +105,8 @@ with tf.Session() as session:
                 testing_cost= session.run(cost, feed_dict={X: in_test, Y: out_test})
                 print("PASS: {} || Training accuracy: {:0.2f}% | Training accuracy: {:0.2f}%".format(epoch, 100*(1-training_cost), 100*(1-testing_cost)))
             
-            print("Training complete")
-            params_saver = saver.save(session, SAVE_PATH)   
+        print("Training complete")
+        params_saver = saver.save(session, SAVE_PATH)   
     else: 
         print("Restoring model")
         # Importing the graph
@@ -133,7 +115,11 @@ with tf.Session() as session:
         # Importing the params
         saver.restore(session, checkpoint)
 
-        test_input = [1,1,1,1,1,1,1]
-        print("Executing the model for str({})".format(test_input))
-        ctd = np.array(out_scaler.inverse_transform(session.run(prediction, feed_dict={'inputs/input:0'})))
+        test_input_raw = ["get involved!",1,1,24,1,3]
+        print("Executing the model for str({})".format(test_input_raw))
+        test_input = test_input_raw
+        test_input[0] = le_txt.fit_transform([test_input_raw[0]])[0]
+        scaled_input = in_scaler.fit_transform([test_input])
+        ctd = np.array(out_scaler.inverse_transform(session.run(prediction, feed_dict={'inputs/input:0':scaled_input})))[0][0]
+        print ctd
         print("Predicted ctd of {:0.2f}".format(ctd))
