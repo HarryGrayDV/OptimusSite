@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { css, createGlobalStyle } from 'styled-components';
 
 const colors = {
   primary: '#4CBBD2',
@@ -7,6 +7,22 @@ const colors = {
   secondary: '#8ABAC4',
   tertiary: '#483547',
 };
+
+const sizes = {
+  desktop: 992,
+  tablet: 768,
+  phone: 576,
+};
+
+const media = Object.keys(sizes).reduce((acc, label) => {
+  acc[label] = (...args) => css`
+    @media (max-width: ${sizes[label] / 16}em) {
+      ${css(...args)};
+    }
+  `;
+
+  return acc;
+}, {});
 
 const GlobalStyle = createGlobalStyle`
   html,
@@ -36,4 +52,4 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export { GlobalStyle, colors };
+export { GlobalStyle, colors, media };
