@@ -10,15 +10,19 @@ const HomeSt = styled.main`
 
 const ResultsSt = styled.div`
   position: relative;
-  transform: translateX(-150px);
+  transform: ${props =>
+    props.playing ? 'translateX(0)' : 'translateX(-150px)'};
+  transition: transform 0.75s cubic-bezier(0.19, 1, 0.22, 1);
 `;
 
 const ResultSt = styled.div`
+  position: relative;
   width: 900px;
   height: 600px;
   padding: 24px;
   background: #ffffff;
   box-shadow: 0 22px 64px 0 rgba(0, 0, 0, 0.15);
+  z-index: 2;
 
   img {
     width: 100%;
@@ -39,6 +43,10 @@ const InsightsSt = styled.div`
   box-shadow: 0 22px 64px 0 rgba(0, 0, 0, 0.15);
   color: #fff;
   padding: 24px;
+  transform: ${props =>
+    props.playing ? 'translateX(-320px)' : 'translateX(0)'};
+  transition: transform 0.75s cubic-bezier(0.19, 1, 0.22, 1);
+  z-index: 1;
 
   h2 {
     margin-top: 0;

@@ -10,6 +10,7 @@
  */
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import Slider from '../../components/Slider';
 import PlayPause from '../../components/PlayPause';
@@ -20,19 +21,36 @@ import { HomeSt, ResultsSt, ResultSt, InsightsSt, ControlSt } from './style';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class HomePage extends React.PureComponent {
+  constructor() {
+    super();
+
+    this.state = {
+      playing: false,
+    };
+  }
+
+  togglePlaying = () => {
+    this.setState(prevState => ({
+      playing: !prevState.playing,
+    }));
+  };
+
   render() {
+    const { playing } = this.state;
+
     return (
       <>
         <Header>
           <span>OptimusSite</span>
+          <Link to="/testing">Testing</Link>
         </Header>
         <HomeSt>
           <div>
-            <ResultsSt>
+            <ResultsSt playing={playing}>
               <ResultSt>
                 <img src={results} alt="Results" />
               </ResultSt>
-              <InsightsSt>
+              <InsightsSt playing={playing}>
                 <h2>INSIGHTS</h2>
                 <ul>
                   <li>
@@ -58,7 +76,7 @@ export default class HomePage extends React.PureComponent {
             </ResultsSt>
             <Slider />
             <ControlSt>
-              <PlayPause />
+              <PlayPause onClick={this.togglePlaying} playing={playing} />
             </ControlSt>
           </div>
         </HomeSt>
