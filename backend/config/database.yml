@@ -80,7 +80,8 @@ test:
 #
 production:
   <<: *default
-  database: optimus-site-api_production
-  username: optimus-site-api
-  password: <%= ENV['OPTIMUS-SITE-API_DATABASE_PASSWORD'] %>
+  database: optimussite
+  username: optimussite
+  password: optimussite1
+  host: optimussite.cbea2zth9oyg.us-east-1.rds.amazonaws.com
   port: 8080
