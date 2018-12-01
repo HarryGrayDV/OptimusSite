@@ -10,6 +10,9 @@ name = "pypi"
 tensorflow = "*"
 flask = "*"
 scikit-learn = "*"
+requests = "*"
+pandas = "*"
+sklearn = "*"
 
 [requires]
 python_version = "3.7"
