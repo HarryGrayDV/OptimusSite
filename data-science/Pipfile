@@ -14,6 +14,9 @@ pandas = "*"
 tensorflow = {file = "https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-0.12.0-py3-none-any.whl"}
 sqlalchemy = "*"
 pydocstyle = "*"
+nltk = "*"
+gensim = "*"
+python-twitter = "*"
 
 [requires]
 python_version = "3.7"
