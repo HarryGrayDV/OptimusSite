@@ -28,10 +28,9 @@ class TrainModel():
     def load(self):
         """Load the data from the database."""
         self.data = pd.read_sql(
-            "SELECT * FROM {}".format(self.DATA_TABLE),
+            "SELECT id, text, position, ctd, mobile, age, gender, region FROM {}".format(
+                self.DATA_TABLE),
             self.db_connection.connection, index_col='id')
-
-        self.data = self.data.drop(['created_at', 'updated_at'], axis=1)
 
         print('the data', self.data)
         print(self.data.columns)
@@ -44,6 +43,7 @@ class TrainModel():
         self.in_scaler, self.out_scaler, self.le_txt = encoders(self.data)
         self.in_scaled, self.out_scaled = preprocess_training(
             self.data, self.le_txt, self.in_scaler, self.out_scaler)
+        print(self.data.columns)
 
     def run(self):
         """Run the model."""

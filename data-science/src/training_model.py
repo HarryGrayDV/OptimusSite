@@ -58,7 +58,7 @@ def run_training(in_scaled, out_scaled, in_scaler, out_scaler, le_txt):
         w1 = tf.get_variable(name='w1', shape=[
                              n_inputs, l1_nodes], initializer=tf.contrib.layers.xavier_initializer())
         b1 = tf.get_variable(
-            name='b1', shape=[l1_nodes], initializer=tf.zeros_initializer())
+            name='b1', shape=[l1_nodes], initializer=tf.zeros_initializer)
 
         l1_out = tf.nn.relu(tf.matmul(X, w1) + b1, name='l1_output')
 
@@ -67,15 +67,12 @@ def run_training(in_scaled, out_scaled, in_scaler, out_scaler, le_txt):
         w2 = tf.get_variable(name='w2', shape=[
                              l1_nodes, l2_nodes], initializer=tf.contrib.layers.xavier_initializer())
         b2 = tf.get_variable(
-            name='b2', shape=[l2_nodes], initializer=tf.zeros_initializer())
+            name='b2', shape=[l2_nodes], initializer=tf.zeros_initializer)
 
         l2_out = tf.nn.relu(tf.matmul(l1_drop, w2) + b2, name='l2_output')
 
         Y = tf.placeholder(tf.float32, shape=[None, 1], name='target')
         l2_loss = 0.01 * tf.nn.l2_loss(w1) + 0.01 * tf.nn.l2_loss(w2)
-
-        cost = tf.add(tf.reduce_mean(tf.squared_difference(
-            prediction, Y)), l2_loss, name='cost')
 
     # Output Layer
     with tf.variable_scope("output"):
@@ -83,7 +80,7 @@ def run_training(in_scaled, out_scaled, in_scaler, out_scaler, le_txt):
         weights = tf.get_variable(name='wo', shape=[
                                   l2_nodes, n_outputs], initializer=tf.contrib.layers.xavier_initializer())
         biases = tf.get_variable(
-            name='bo', shape=[n_outputs], initializer=tf.zeros_initializer())
+            name='bo', shape=[n_outputs], initializer=tf.zeros_initializer)
 
         prediction = tf.add(tf.matmul(l2_drop, weights),
                             biases, name='prediction')
@@ -107,6 +104,10 @@ def run_training(in_scaled, out_scaled, in_scaler, out_scaler, le_txt):
         # Ingest and Split training and testing
         in_training, in_test, out_training, out_test = h.training_test(
             in_scaled, out_scaled, out_scaler, test_size)
+
+        print(in_training.shape)
+        print(out_training.shape)
+
         for epoch in range(n_epochs):
             session.run(optimizer, feed_dict={
                         X: in_training, Y: out_training})
