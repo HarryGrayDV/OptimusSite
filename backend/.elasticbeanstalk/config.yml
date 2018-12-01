@@ -1,0 +1,20 @@
+branch-defaults:
+  default:
+    environment: optimus-production
+environment-defaults:
+  optimus-production:
+    branch: null
+    repository: null
+global:
+  application_name: optimus-site
+  default_ec2_keyname: null
+  default_platform: arn:aws:elasticbeanstalk:eu-west-2::platform/Puma with Ruby 2.5
+    running on 64bit Amazon Linux/2.8.6
+  default_region: eu-west-2
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: null
+  sc: null
+  workspace_type: Application
