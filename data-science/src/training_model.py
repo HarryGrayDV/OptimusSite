@@ -29,7 +29,7 @@ ctd: click through delta (time to click the button) / TODO: Big number if not cl
 VERSION = 1
 MODEL_NAME = "optimusai"
 MODEL_PATH = "trained_model"
-SAVE_PATH = MODEL_PATH + "/" + MODEL_NAME
+SAVE_PATH = MODEL_PATH + "/" + MODEL_NAME + "/" + VERSION
 
 ## NN Params
 test_size = 0.3
@@ -102,7 +102,7 @@ raw_data = pd.read_csv("inputs/raw_data.csv", index_col = 0)
 in_scaler, out_scaler, le_txt = h.encoders(raw_data)
 
 # Look for preexisting model
-checkpoint = tf.train.latest_checkpoint(MODEL_PATH)
+checkpoint = tf.train.latest_checkpoint(SAVE_PATH)
 should_train = checkpoint == None
 
 with tf.Session() as session:
