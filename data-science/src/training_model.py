@@ -14,12 +14,11 @@ and highly likely to be non-linear, a custom neural network with X hidden layers
 
 INPUTS
 text: string (to be encoded)
-color_h: hsl hue info
-color_s: hsl saturation info
-color_l: hsl lightness info
-size_w: width (%)
-size_h: height (pixels)
 position: id
+device: 0/1 (Desktop/Mobile)
+age: int
+gender: 0/1 (M/F)
+region: int (for the tracked regions)
 
 OUTPUT
 ctd: click through delta (time to click the button) / TODO: Big number if not clicked
@@ -34,8 +33,8 @@ SAVE_PATH = MODEL_PATH + "/" + MODEL_NAME
 test_size = 0.3
 
 learning_rate = 0.001
-n_epochs = 2000
-keep_prob = 1
+n_epochs =  1500
+keep_prob = 0.6
 
 n_inputs = 6
 n_outputs = 1
@@ -50,17 +49,17 @@ with tf.variable_scope("inputs"):
     X = tf.placeholder(tf.float32, shape = [None, n_inputs], name = 'input')
 
 with tf.variable_scope("layer1"):
-    weights = tf.get_variable(name = 'w1', shape = [n_inputs,l1_nodes], initializer = tf.contrib.layers.xavier_initializer())
-    biases = tf.get_variable(name = 'b1', shape = [l1_nodes], initializer = tf.zeros_initializer())
+    w1 = tf.get_variable(name = 'w1', shape = [n_inputs,l1_nodes], initializer = tf.contrib.layers.xavier_initializer())
+    b1 = tf.get_variable(name = 'b1', shape = [l1_nodes], initializer = tf.zeros_initializer())
 
-    l1_out = tf.nn.relu(tf.matmul(X, weights) + biases, name= 'l1_output')
+    l1_out = tf.nn.relu(tf.matmul(X, w1) + b1, name= 'l1_output')
 
 with tf.variable_scope("layer2"):
     l1_drop = dropout(l1_out, keep_prob)
-    weights = tf.get_variable(name = 'w2', shape = [l1_nodes,l2_nodes], initializer = tf.contrib.layers.xavier_initializer())
-    biases = tf.get_variable(name = 'b2', shape = [l2_nodes], initializer = tf.zeros_initializer())
+    w2 = tf.get_variable(name = 'w2', shape = [l1_nodes,l2_nodes], initializer = tf.contrib.layers.xavier_initializer())
+    b2 = tf.get_variable(name = 'b2', shape = [l2_nodes], initializer = tf.zeros_initializer())
 
-    l2_out = tf.nn.relu(tf.matmul(l1_drop, weights) + biases, name= 'l2_output')
+    l2_out = tf.nn.relu(tf.matmul(l1_drop, w2) + b2, name= 'l2_output')
 
 ### Output Layer
 with tf.variable_scope("output"):
@@ -73,7 +72,9 @@ with tf.variable_scope("output"):
 ### Optimizer and Cost
 with tf.variable_scope("cost"):
     Y = tf.placeholder(tf.float32, shape = [None, 1], name = 'target')
-    cost = tf.reduce_mean(tf.squared_difference(prediction, Y), name = 'cost')
+    l2_loss = 0.01*tf.nn.l2_loss(w1) + 0.01*tf.nn.l2_loss(w2)
+
+    cost = tf.add(tf.reduce_mean(tf.squared_difference(prediction, Y)), l2_loss, name = 'cost') 
 
 with tf.variable_scope("optimizer"):
     optimizer = tf.train.AdamOptimizer(learning_rate).minimize(cost)
