@@ -8,7 +8,7 @@ class ButtonsController < ApplicationController
     button = Button.new(button_params)
 
     if button.save!
-      render json: button, status: :ok
+      render json: button, status: :created
     else
       render json: button.errors.full_messages, status: :unprocessable_entity
     end
