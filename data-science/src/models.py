@@ -6,7 +6,7 @@ from src.misc import DBConnection
 
 class TrainModel():
 
-    TABLE = "data"
+    TABLE = "buttons"
 
     def __init__(self):
         """Train the model pulling data from the DB."""
@@ -22,7 +22,7 @@ class TrainModel():
         """Load the data from the database."""
         self.data = pd.read_sql(
             "SELECT * FROM {}".format(self.TABLE),
-            self.db_connection.engine)
+            self.db_connection.connection)
 
         print('the data', self.data)
 
