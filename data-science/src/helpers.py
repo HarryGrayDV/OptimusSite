@@ -7,19 +7,17 @@ from sklearn.preprocessing import MinMaxScaler
 def encoders(raw_data):
     # Encoding the labels
     le_txt = preprocessing.LabelEncoder()
-    le_region = preprocessing.LabelEncoder()
 
     # Normalising inputs and outputs
     in_scaler = MinMaxScaler(feature_range=(0, 1))
     out_scaler = MinMaxScaler(feature_range=(0, 1))
 
-    return in_scaler, out_scaler, le_txt, le_region
+    return in_scaler, out_scaler, le_txt
 
 
-def preprocess_training(raw_data, le_txt, le_region, in_scaler, out_scaler):
+def preprocess_training(raw_data, le_txt, in_scaler, out_scaler):
     # Separate inputs from outputs in training dataset
     raw_data['text'] = le_txt.fit_transform(raw_data['text'])
-    raw_data['region'] = le_region.fit_transform(raw_data['region'])
 
     inputs = raw_data.drop(['ctd'], axis=1).values
     outputs = raw_data[['ctd']].values
