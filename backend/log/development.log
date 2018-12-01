@@ -304,3 +304,28 @@ Migrating to UpdateModels (20181201172930)
   ↳ bin/rails:9
   [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
   ↳ bin/rails:9
+  [1m[36mModel Load (5.7ms)[0m  [1m[34mSELECT  "models".* FROM "models" WHERE "models"."mobile" = $1 LIMIT $2[0m  [["mobile", true], ["LIMIT", 11]]
+  [1m[36mModel Load (0.5ms)[0m  [1m[34mSELECT  "models".* FROM "models" WHERE "models"."mobile" = $1 LIMIT $2[0m  [["mobile", false], ["LIMIT", 11]]
+Started GET "/buttons" for 127.0.0.1 at 2018-12-01 09:55:09 -0800
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/cheah_geoffrey/.rbenv/versions/2.5.3/lib/ruby/gems/2.5.0/gems/activerecord-5.2.1.1/lib/active_record/log_subscriber.rb:98
+Processing by ButtonsController#index as */*
+  [1m[36mButton Load (1.6ms)[0m  [1m[34mSELECT "buttons".* FROM "buttons"[0m
+  ↳ app/controllers/buttons_controller.rb:3
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 2.7ms)
+
+
+Started GET "/models/web" for 127.0.0.1 at 2018-12-01 09:55:21 -0800
+Processing by ModelsController#web as */*
+  [1m[36mModel Load (0.4ms)[0m  [1m[34mSELECT "models".* FROM "models" WHERE "models"."mobile" = $1[0m  [["mobile", false]]
+  ↳ app/controllers/models_controller.rb:8
+Completed 200 OK in 7ms (Views: 0.1ms | ActiveRecord: 3.4ms)
+
+
+Started GET "/models/mobile" for 127.0.0.1 at 2018-12-01 09:55:28 -0800
+Processing by ModelsController#mobile as */*
+  [1m[36mModel Load (0.4ms)[0m  [1m[34mSELECT "models".* FROM "models" WHERE "models"."mobile" = $1[0m  [["mobile", true]]
+  ↳ app/controllers/models_controller.rb:3
+Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.4ms)
+
+
