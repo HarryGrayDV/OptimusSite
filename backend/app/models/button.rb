@@ -1,11 +1,11 @@
 class Button < ApplicationRecord
 
-  validates :text, presence: true
-  validates :colour_h, presence: true
-  validates :colour_s, presence: true
-  validates :colour_l, presence: true
-  validates :width, presence: true
-  validates :height, presence: true
   validates :position, presence: true
-  validates :click_through_delta, presence: true
+  validates :text, presence: true
+  validates :mobile, presence: true
+  validates :age, presence: true
+  validates :gender, presence: true
+  validates :region, presence: true
+  validates :ctd, presence: true
+  validates :synthetic, presence: true
 end
