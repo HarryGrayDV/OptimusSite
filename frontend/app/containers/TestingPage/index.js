@@ -1,70 +1,67 @@
 import React from 'react';
 import styled from 'styled-components';
-import Header from '../../components/Header';
 
 const TestingSt = styled.div`
+  h1,
+  h2,
+  h3,
+  .heading {
+    font-family: 'Playfair display', serif;
+  }
+
+  background-color: #f8f4f0;
+  min-height: 100vh;
+`;
+
+const MenuSt = styled.div`
+  position: relative;
+  width: 200px;
+  height: 128px;
   display: flex;
   flex-direction: row;
-  width: 100%;
-  max-width: 1000px;
-  margin: 32px auto;
-  align-items: end;
+  padding: 0 34px;
+  background-color: #fff;
+  align-items: center;
+  box-shadow: 0 2px 64px 0 rgba(0, 0, 0, 0.1);
+`;
 
-  main,
-  aside {
-    background-color: #fff;
-    margin: 12px;
-    padding: 24px;
+const LogoSt = styled.div`
+  position: absolute;
+  right: -78px;
+
+  span:not(.heading) {
+    position: absolute;
+    top: -8px;
+    left: -6px;
+    font-size: 22px;
   }
 
-  h1,
-  h4 {
-    margin-top: 0;
-  }
-
-  main {
-    width: 70%;
-  }
-
-  aside {
-    width: 30%;
+  .heading {
+    font-size: 52px;
+    font-weight: bold;
   }
 `;
 
-const ButtonSt = styled.button`
-  color: #fff;
-  height: ${props => props.height}px;
-  width: ${props => props.width}%;
-  background-color: hsl(
-    ${props => `
-      ${props.backgroundColor.h}, ${props.backgroundColor.s}%,
-      ${props.backgroundColor.l}%
-    `}
-  );
-`;
+// const ButtonSt = styled.button`
+//   color: #fff;
+//   background-color: #777;
+//   padding: 12px;
+// `;
 
 export default class TestingPage extends React.PureComponent {
   constructor() {
     super();
 
     this.labels = [
-      'Click here',
-      'Sign up',
-      'Get involved!',
-      'Newsletter sign up',
-      'Please click me',
-      'Enter your email',
+      'BUY NOW',
+      'PURCHASE',
+      'ADD TO CART',
+      'ADD TO BASKET',
+      'GET FLAQUE',
     ];
 
     this.state = {
-      position: this.randomBetween(0, 11),
-      height: this.randomBetween(40, 200),
-      width: this.randomBetween(40, 100),
-      color: {
-        h: this.randomBetween(0, 360),
-        s: this.randomBetween(0, 100),
-        l: this.randomBetween(0, 100),
-      },
+      position: this.randomBetween(0, 1),
       text: this.labels[this.randomBetween(0, this.labels.length - 1)],
     };
   }
@@ -73,184 +70,45 @@ export default class TestingPage extends React.PureComponent {
     Math.floor(Math.random() * (max - min + 1) + min);
 
   render() {
-    const { position, width, height, color, text } = this.state;
+    const { position, text } = this.state;
 
     return (
-      <>
-        <Header generic>
-          <span>Testing page</span>
-          {position === 11 && (
-            <ButtonSt
-              type="button"
-              width={width}
-              height={height}
-              backgroundColor={color}
-            >
-              {text}
-            </ButtonSt>
-          )}
-        </Header>
-        <TestingSt>
-          <aside>
-            <h4>Testing as well</h4>
-            {position === 0 && (
-              <ButtonSt
-                type="button"
-                width={width}
-                height={height}
-                backgroundColor={color}
-              >
-                {text}
-              </ButtonSt>
-            )}
+      <TestingSt>
+        <MenuSt>
+          <svg width="42" height="24" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M0 0h42v4H0V0zm0 10h42v4H0v-4zm0 10h42v4H0v-4z"
+              fill="#8C2626"
+              fillRule="evenodd"
+            />
+          </svg>
+          <LogoSt>
+            <span>la</span>
+            <span className="heading">Flaque</span>
+          </LogoSt>
+        </MenuSt>
+        <main>
+          <div className="hero">
+            <h1>BMW 330i</h1>
+            <p>Oh what a bloody beauty. I bet you want it.</p>
+          </div>
+          <div className="info">
             <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry.
+              Built with pure elegance at its core, the e45 BMW 330i is a
+              monster, a machine, a matriarch, and a bloody beast of a bastard
             </p>
-            {position === 1 && (
-              <ButtonSt
-                type="button"
-                width={width}
-                height={height}
-                backgroundColor={color}
-              >
-                {text}
-              </ButtonSt>
-            )}
             <p>
-              Lorem Ipsum has been the industry's standard dummy text ever since
-              the 1500s, when an unknown printer took a galley of type and
-              scrambled it to make a type specimen book.
+              Don't you try and tell me this concept doesn't tickle you right in
+              the bloody pickle because I won't flipping believe you.
             </p>
-            {position === 2 && (
-              <ButtonSt
-                type="button"
-                width={width}
-                height={height}
-                backgroundColor={color}
-              >
-                {text}
-              </ButtonSt>
-            )}
-            <p>
-              It has survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged.
-            </p>
-            {position === 3 && (
-              <ButtonSt
-                type="button"
-                width={width}
-                height={height}
-                backgroundColor={color}
-              >
-                {text}
-              </ButtonSt>
-            )}
-            <p>
-              It was popularised in the 1960s with the release of Letraset
-              sheets containing Lorem Ipsum passages.
-            </p>
-            {position === 4 && (
-              <ButtonSt
-                type="button"
-                width={width}
-                height={height}
-                backgroundColor={color}
-              >
-                {text}
-              </ButtonSt>
-            )}
-          </aside>
-          <main>
-            <h1>Test</h1>
-            {position === 5 && (
-              <ButtonSt
-                type="button"
-                width={width}
-                height={height}
-                backgroundColor={color}
-              >
-                {text}
-              </ButtonSt>
-            )}
-            <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry.
-            </p>
-            {position === 6 && (
-              <ButtonSt
-                type="button"
-                width={width}
-                height={height}
-                backgroundColor={color}
-              >
-                {text}
-              </ButtonSt>
-            )}
-            <p>
-              Lorem Ipsum has been the industry's standard dummy text ever since
-              the 1500s, when an unknown printer took a galley of type and
-              scrambled it to make a type specimen book.
-            </p>
-            {position === 7 && (
-              <ButtonSt
-                type="button"
-                width={width}
-                height={height}
-                backgroundColor={color}
-              >
-                {text}
-              </ButtonSt>
-            )}
-            <p>
-              It has survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged.
-            </p>
-            {position === 8 && (
-              <ButtonSt
-                type="button"
-                width={width}
-                height={height}
-                backgroundColor={color}
-              >
-                {text}
-              </ButtonSt>
-            )}
-            <p>
-              It was popularised when an unknown printer took a galley of type
-              and scrambled it to make a type specimen book.
-            </p>
-            {position === 9 && (
-              <ButtonSt
-                type="button"
-                width={width}
-                height={height}
-                backgroundColor={color}
-              >
-                {text}
-              </ButtonSt>
-            )}
-            <p>
-              It has survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged.
-            </p>
-            {position === 10 && (
-              <ButtonSt
-                type="button"
-                width={width}
-                height={height}
-                backgroundColor={color}
-              >
-                {text}
-              </ButtonSt>
-            )}
-            <p>
-              It was popularised in the 1960s with the release of Letraset
-              sheets containing Lorem Ipsum passages.
-            </p>
-          </main>
-        </TestingSt>
-      </>
+          </div>
+          <div className="three">
+            <div>Yeah you know I'm going to do it - no 'ragrets' ya know</div>
+            <div>Can you believe how unique this pattern is? I can't.</div>
+            <div>Three is a magic number and you feel the spiritual energy</div>
+          </div>
+        </main>
+      </TestingSt>
     );
   }
 }

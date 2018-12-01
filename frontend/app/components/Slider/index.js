@@ -70,15 +70,68 @@ const SliderControlSt = styled.button`
   }
 `;
 
-const Slider = () => (
-  <SliderSt>
-    <span>START</span>
-    <SliderControlSt type="button">
-      <span className="label">16:23</span>
-      <div className="shadows" />
-    </SliderControlSt>
-    <span>LATEST</span>
-  </SliderSt>
-);
+class Slider extends React.PureComponent {
+  constructor() {
+    super();
+
+    this.controlRef = React.createRef();
+
+    this.state = {
+      mousedown: false,
+      mx: 0,
+      dx: 0,
+    };
+  }
+
+  componentDidMount() {
+    this.controlRef.current.addEventListener('mousedown', this.handleMousedown);
+    window.addEventListener('mouseup', this.handleMouseup);
+    window.addEventListener('mousemove', this.handleMousemove);
+  }
+
+  handleMousedown = e => {
+    const { mousedown } = this.state;
+
+    if (!mousedown) {
+      this.setState({
+        mousedown: true,
+        mx: e.clientX,
+      });
+    }
+  };
+
+  handleMouseup = () => {
+    const { mousedown } = this.state;
+
+    if (mousedown) {
+      this.setState({
+        mousedown: false,
+      });
+    }
+  };
+
+  handleMousemove = e => {
+    const { mousedown } = this.state;
+
+    if (mousedown) {
+      this.setState({
+        mx: e.clientX,
+      });
+    }
+  };
+
+  render() {
+    return (
+      <SliderSt>
+        <span>START</span>
+        <SliderControlSt type="button" ref={this.controlRef}>
+          <span className="label">16:23</span>
+          <div className="shadows" />
+        </SliderControlSt>
+        <span>LATEST</span>
+      </SliderSt>
+    );
+  }
+}
 
 export default Slider;
