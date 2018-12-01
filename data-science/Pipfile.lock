@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "2cb0f11f1c27637df1cd12547027e33203f68294e9d83c8be7034f08b85fc6c7"
+            "sha256": "bf287671ffb02e2cf9c8fc20c026ddd45781c03dde94d9fb87ddf310f69de6e7"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -55,7 +55,6 @@
                 "sha256:2271c0070dbcb5275fad4a82e29f23ab92682dc45f9dfbc22c02ba9b9322ce48",
                 "sha256:a080b744b7e345ccfcbc77954861cb05b3c63786e93f2b3875e0913d44b43f05"
             ],
-            "index": "pypi",
             "version": "==1.0.2"
         },
         "gast": {
@@ -267,7 +266,6 @@
                 "sha256:f71f1a7e2d03758f6e957896ed696254e2bc83110ddbc6942018f1a232dd9dad",
                 "sha256:fb944c8f0b0ab5c1f7846c686bc4cdf8cde7224655c12edcd59d5212cd57bec0"
             ],
-            "index": "pypi",
             "version": "==0.23.4"
         },
         "protobuf": {
@@ -324,7 +322,6 @@
                 "sha256:eb86520753560a7e89639500e2a254bb6f683342af598088cb72c73edcad21e6",
                 "sha256:ff18c5c40a38d41811c23e2480615425c97ea81fd7e9118b8b899c512d97c737"
             ],
-            "index": "pypi",
             "version": "==2.7.6.1"
         },
         "python-dateutil": {
@@ -346,7 +343,6 @@
                 "sha256:65b3a120e4329e33c9889db89c80976c5272f56ea92d3e74da8a463992e3ff54",
                 "sha256:ea881206e59f41dbd0bd445437d792e43906703fff75ca8ff43ccdb11f33f263"
             ],
-            "index": "pypi",
             "version": "==2.20.1"
         },
         "scikit-learn": {
@@ -422,13 +418,6 @@
             ],
             "version": "==1.11.0"
         },
-        "sklearn": {
-            "hashes": [
-                "sha256:e23001573aa194b834122d2b9562459bf5ae494a2d59ca6b8aa22c85a44c0e31"
-            ],
-            "index": "pypi",
-            "version": "==0.0"
-        },
         "tensorboard": {
             "hashes": [
                 "sha256:537603db949e10d2f5f201d88b073f3f8fb4e4c311d5541e1d4518aa59aa8daa",
@@ -451,7 +440,6 @@
                 "sha256:e4f479e6aca595acc98347364288cbdfd3c025ca85389380174ea75a43c327b7",
                 "sha256:f587dc03b5f0d1e50cca39b7159c9f21ffdec96273dbf5f7619d48c622cb21f2"
             ],
-            "index": "pypi",
             "version": "==1.12.0"
         },
         "termcolor": {
