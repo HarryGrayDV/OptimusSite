@@ -10,7 +10,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { colors } from '../../global-styles';
+import { colors, media } from '../../global-styles';
 
 const InsightsSt = styled.div`
   position: absolute;
@@ -28,6 +28,12 @@ const InsightsSt = styled.div`
     props.playing ? 'translateX(-320px)' : 'translateX(0)'};
   transition: transform 0.75s cubic-bezier(0.19, 1, 0.22, 1);
   z-index: 1;
+
+  ${media.projector`
+    width: 220px;
+  transform: ${props =>
+    props.playing ? 'translateX(-220px)' : 'translateX(0)'};
+  `};
 
   h2 {
     margin-top: 0;

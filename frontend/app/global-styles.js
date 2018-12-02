@@ -9,6 +9,7 @@ const colors = {
 };
 
 const sizes = {
+  projector: 1024,
   desktop: 992,
   tablet: 768,
   phone: 576,
