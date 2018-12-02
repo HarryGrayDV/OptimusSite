@@ -1,11 +1,21 @@
 import styled from 'styled-components';
-import { media } from '../../global-styles';
+import { media, colors } from '../../global-styles';
 
 const HomeSt = styled.main`
   display: flex;
   flex-direction: row;
   justify-content: center;
   padding: 64px;
+
+  .ctd {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    z-index: 3;
+    padding: 12px;
+    color: #fff;
+    background-color: ${colors.tertiary};
+  }
 
   ${media.projector`
     padding: 32px;

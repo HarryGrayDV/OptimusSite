@@ -153,6 +153,7 @@ const ButtonSt = styled.button`
   padding: 32px;
   position: relative;
   z-index: 1;
+  display: block;
 `;
 
 export { TestingSt, MenuSt, LogoSt, ButtonSt };

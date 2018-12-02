@@ -54,13 +54,13 @@ const InsightsSt = styled.div`
   }
 `;
 
-const Insights = ({ playing, modelCount }) => (
+const Insights = ({ playing, modelCount, ctdDifference }) => (
   <InsightsSt playing={playing}>
     <h2>INSIGHTS</h2>
     <ul>
       <li>
-        OptimusSite has assisted in improving the conversion rate of your CTA by
-        8%
+        OptimusSite has assisted in improving the click through delta of your
+        CTA by {ctdDifference} seconds
       </li>
       <li>
         <hr />
@@ -83,6 +83,7 @@ const Insights = ({ playing, modelCount }) => (
 Insights.propTypes = {
   playing: PropTypes.bool.isRequired,
   modelCount: PropTypes.number.isRequired,
+  ctdDifference: PropTypes.number.isRequired,
 };
 
 export default Insights;
