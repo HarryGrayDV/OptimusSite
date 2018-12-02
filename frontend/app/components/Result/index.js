@@ -16,7 +16,7 @@ import { colors, media } from '../../global-styles';
 const ResultSt = styled.div`
   position: relative;
   width: 900px;
-  height: 600px;
+  height: 700px;
   background: #ffffff;
   box-shadow: 0 22px 64px 0 rgba(0, 0, 0, 0.15);
   z-index: 2;
@@ -30,7 +30,7 @@ const ResultSt = styled.div`
 
   > div {
     width: 1440px;
-    height: 1200px;
+    height: 700px;
     position: absolute;
     top: 20px;
     left: 32px;
