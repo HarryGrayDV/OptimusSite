@@ -18,7 +18,6 @@ def baseline_model():
                     kernel_initializer='normal'))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
-
     model.add(Dense(64, kernel_initializer='normal', activation='relu'))
     model.add(Dense(128, kernel_initializer='normal', activation='relu'))
     model.add(Dense(64, kernel_initializer='normal', activation='relu'))

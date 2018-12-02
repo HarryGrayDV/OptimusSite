@@ -10,13 +10,13 @@ class ButtonsController < ApplicationController
     if button.save!
       render json: button, status: :created
     else
-      render json: button.errors.full_messages, status: :unprocessable_entity
+      render json: button.errors.messages, status: :unprocessable_entity
     end
   end
 
   private
 
   def button_params
-    params.require(:button).permit(:text, :colour_h, :colour_s, :colour_l, :width, :height, :position, :click_through_delta)
+    params.require(:button).permit(:position, :text, :mobile, :age, :gender, :region, :ctd, :synthetic)
   end
 end

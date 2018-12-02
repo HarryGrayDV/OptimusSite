@@ -363,3 +363,253 @@ Migrating to AddDefaultForSyntheticButtonsAttribute (20181201184049)
   ↳ bin/rails:9
   [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
   ↳ bin/rails:9
+Started POST "//buttons" for 127.0.0.1 at 2018-12-01 13:16:49 -0800
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/cheah_geoffrey/.rbenv/versions/2.5.3/lib/ruby/gems/2.5.0/gems/activerecord-5.2.1.1/lib/active_record/log_subscriber.rb:98
+Processing by ButtonsController#create as */*
+  Parameters: {"text"=>"Make it Rain!", "mobile"=>false, "age"=>25, "gender"=>1, "region"=>1, "position"=>1, "ctd"=>3, "synthetic"=>false, "button"=>{"text"=>"Make it Rain!", "position"=>1, "ctd"=>3, "mobile"=>false, "age"=>25, "gender"=>1, "region"=>1, "synthetic"=>false}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/buttons_controller.rb:10
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/buttons_controller.rb:10
+Completed 422 Unprocessable Entity in 18ms (ActiveRecord: 4.4ms)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: Mobile can't be blank, Synthetic can't be blank):
+  
+app/controllers/buttons_controller.rb:10:in `create'
+Started POST "//buttons" for 127.0.0.1 at 2018-12-01 13:17:12 -0800
+Processing by ButtonsController#create as */*
+  Parameters: {"text"=>"Make it Rain!", "mobile"=>false, "age"=>25, "gender"=>1, "region"=>1, "position"=>1, "ctd"=>3, "synthetic"=>false, "button"=>{"text"=>"Make it Rain!", "position"=>1, "ctd"=>3, "mobile"=>false, "age"=>25, "gender"=>1, "region"=>1, "synthetic"=>false}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/buttons_controller.rb:11
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/buttons_controller.rb:11
+Completed 422 Unprocessable Entity in 11ms (ActiveRecord: 5.2ms)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: Mobile can't be blank, Synthetic can't be blank):
+  
+app/controllers/buttons_controller.rb:11:in `create'
+Started POST "//buttons" for 127.0.0.1 at 2018-12-01 13:17:44 -0800
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/cheah_geoffrey/.rbenv/versions/2.5.3/lib/ruby/gems/2.5.0/gems/activerecord-5.2.1.1/lib/active_record/log_subscriber.rb:98
+Processing by ButtonsController#create as */*
+  Parameters: {"text"=>"Make it Rain!", "mobile"=>false, "age"=>25, "gender"=>1, "region"=>1, "position"=>1, "ctd"=>3, "synthetic"=>false, "button"=>{"text"=>"Make it Rain!", "position"=>1, "ctd"=>3, "mobile"=>false, "age"=>25, "gender"=>1, "region"=>1, "synthetic"=>false}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/buttons_controller.rb:11
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/buttons_controller.rb:11
+Completed 422 Unprocessable Entity in 14ms (ActiveRecord: 3.3ms)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: Mobile can't be blank, Synthetic can't be blank):
+  
+app/controllers/buttons_controller.rb:11:in `create'
+Started POST "//buttons" for 127.0.0.1 at 2018-12-01 13:18:59 -0800
+Processing by ButtonsController#create as */*
+  Parameters: {"text"=>"Make it Rain!", "mobile"=>false, "age"=>25, "gender"=>1, "region"=>1, "position"=>1, "ctd"=>3, "synthetic"=>false, "button"=>{"text"=>"Make it Rain!", "position"=>1, "ctd"=>3, "mobile"=>false, "age"=>25, "gender"=>1, "region"=>1, "synthetic"=>false}}
+Completed 500 Internal Server Error in 11ms (ActiveRecord: 5.0ms)
+
+
+  
+NoMethodError (undefined method `mobile' for #<ActionController::Parameters:0x00007fc8bcbdfba0>):
+  
+app/controllers/buttons_controller.rb:10:in `create'
+Started POST "//buttons" for 127.0.0.1 at 2018-12-01 13:19:28 -0800
+Processing by ButtonsController#create as */*
+  Parameters: {"text"=>"Make it Rain!", "mobile"=>false, "age"=>25, "gender"=>1, "region"=>1, "position"=>1, "ctd"=>3, "synthetic"=>false, "button"=>{"text"=>"Make it Rain!", "position"=>1, "ctd"=>3, "mobile"=>false, "age"=>25, "gender"=>1, "region"=>1, "synthetic"=>false}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/buttons_controller.rb:11
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/buttons_controller.rb:11
+Completed 422 Unprocessable Entity in 13ms (ActiveRecord: 3.0ms)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: Mobile can't be blank, Synthetic can't be blank):
+  
+app/controllers/buttons_controller.rb:11:in `create'
+Started POST "//buttons" for 127.0.0.1 at 2018-12-01 13:21:40 -0800
+Processing by ButtonsController#create as */*
+  Parameters: {"text"=>"Make it Rain!", "mobile"=>false, "age"=>25, "gender"=>1, "region"=>1, "position"=>1, "ctd"=>3, "synthetic"=>false, "button"=>{"text"=>"Make it Rain!", "position"=>1, "ctd"=>3, "mobile"=>false, "age"=>25, "gender"=>1, "region"=>1, "synthetic"=>false}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/buttons_controller.rb:11
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/buttons_controller.rb:11
+Completed 422 Unprocessable Entity in 10ms (ActiveRecord: 3.1ms)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: Mobile can't be blank, Synthetic can't be blank):
+  
+app/controllers/buttons_controller.rb:11:in `create'
+Started POST "//buttons" for 127.0.0.1 at 2018-12-01 13:22:06 -0800
+Processing by ButtonsController#create as */*
+  Parameters: {"text"=>"Make it Rain!", "mobile"=>false, "age"=>25, "gender"=>1, "region"=>1, "position"=>1, "ctd"=>3, "synthetic"=>false, "button"=>{"text"=>"Make it Rain!", "position"=>1, "ctd"=>3, "mobile"=>false, "age"=>25, "gender"=>1, "region"=>1, "synthetic"=>false}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/buttons_controller.rb:11
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/buttons_controller.rb:11
+Completed 422 Unprocessable Entity in 12ms (ActiveRecord: 2.9ms)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: Mobile can't be blank, Synthetic can't be blank):
+  
+app/controllers/buttons_controller.rb:11:in `create'
+Started POST "//buttons" for 127.0.0.1 at 2018-12-01 13:27:08 -0800
+Processing by ButtonsController#create as */*
+  Parameters: {"text"=>"Make it Rain!", "mobile"=>false, "age"=>25, "gender"=>1, "region"=>1, "position"=>1, "ctd"=>3, "synthetic"=>false, "button"=>{"text"=>"Make it Rain!", "position"=>1, "ctd"=>3, "mobile"=>false, "age"=>25, "gender"=>1, "region"=>1, "synthetic"=>false}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/buttons_controller.rb:20
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/buttons_controller.rb:20
+Completed 422 Unprocessable Entity in 12ms (ActiveRecord: 4.0ms)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: Mobile can't be blank, Synthetic can't be blank):
+  
+app/controllers/buttons_controller.rb:20:in `create'
+Started POST "//buttons" for 127.0.0.1 at 2018-12-01 13:27:32 -0800
+Processing by ButtonsController#create as */*
+  Parameters: {"text"=>"Make it Rain!", "mobile"=>false, "age"=>25, "gender"=>1, "region"=>1, "position"=>1, "ctd"=>3, "synthetic"=>false, "button"=>{"text"=>"Make it Rain!", "position"=>1, "ctd"=>3, "mobile"=>false, "age"=>25, "gender"=>1, "region"=>1, "synthetic"=>false}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/buttons_controller.rb:20
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/buttons_controller.rb:20
+Completed 422 Unprocessable Entity in 15ms (ActiveRecord: 2.8ms)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: Mobile can't be blank, Synthetic can't be blank):
+  
+app/controllers/buttons_controller.rb:20:in `create'
+Started POST "//buttons" for 127.0.0.1 at 2018-12-01 13:30:00 -0800
+Processing by ButtonsController#create as */*
+  Parameters: {"text"=>"Make it Rain!", "mobile"=>false, "age"=>25, "gender"=>1, "region"=>1, "position"=>1, "ctd"=>3, "synthetic"=>false, "button"=>{"text"=>"Make it Rain!", "position"=>1, "ctd"=>3, "mobile"=>false, "age"=>25, "gender"=>1, "region"=>1, "synthetic"=>false}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/buttons_controller.rb:10
+  [1m[36mButton Create (1.7ms)[0m  [1m[32mINSERT INTO "buttons" ("text", "position", "ctd", "created_at", "updated_at", "mobile", "age", "gender", "region") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["text", "Make it Rain!"], ["position", 1], ["ctd", 3], ["created_at", "2018-12-01 21:30:00.243937"], ["updated_at", "2018-12-01 21:30:00.243937"], ["mobile", false], ["age", 25], ["gender", 1], ["region", 1]]
+  ↳ app/controllers/buttons_controller.rb:10
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/buttons_controller.rb:10
+Completed 201 Created in 12ms (Views: 0.3ms | ActiveRecord: 4.4ms)
+
+
+Started POST "//buttons" for 127.0.0.1 at 2018-12-01 13:30:14 -0800
+Processing by ButtonsController#create as */*
+  Parameters: {"text"=>"Make it Rain!", "mobile"=>false, "age"=>25, "gender"=>1, "region"=>1, "position"=>1, "ctd"=>3, "button"=>{"text"=>"Make it Rain!", "position"=>1, "ctd"=>3, "mobile"=>false, "age"=>25, "gender"=>1, "region"=>1}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/buttons_controller.rb:10
+  [1m[36mButton Create (0.3ms)[0m  [1m[32mINSERT INTO "buttons" ("text", "position", "ctd", "created_at", "updated_at", "mobile", "age", "gender", "region") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["text", "Make it Rain!"], ["position", 1], ["ctd", 3], ["created_at", "2018-12-01 21:30:14.314789"], ["updated_at", "2018-12-01 21:30:14.314789"], ["mobile", false], ["age", 25], ["gender", 1], ["region", 1]]
+  ↳ app/controllers/buttons_controller.rb:10
+  [1m[35m (1.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/buttons_controller.rb:10
+Completed 201 Created in 5ms (Views: 0.4ms | ActiveRecord: 2.0ms)
+
+
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(6420278694242605500)[0m
+  ↳ bin/rails:9
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+Migrating to AddCtdToModels (20181201214630)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ bin/rails:9
+  [1m[35m (0.8ms)[0m  [1m[35mALTER TABLE "models" ADD "ctd" integer[0m
+  ↳ db/migrate/20181201214630_add_ctd_to_models.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20181201214630"]]
+  ↳ bin/rails:9
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ bin/rails:9
+  [1m[36mActiveRecord::InternalMetadata Load (1.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_advisory_unlock(6420278694242605500)[0m
+  ↳ bin/rails:9
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mModel Create (0.8ms)[0m  [1m[32mINSERT INTO "models" ("created_at", "updated_at") VALUES ($1, $2) RETURNING "id"[0m  [["created_at", "2018-12-01 21:50:55.856913"], ["updated_at", "2018-12-01 21:50:55.856913"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (3.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "models"[0m
+  [1m[36mModel Load (0.3ms)[0m  [1m[34mSELECT  "models".* FROM "models" ORDER BY "models"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "models"[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(6420278694242605500)[0m
+  ↳ bin/rails:9
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+Migrating to ChangeTimestampDefaultForModels (20181201215440)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ bin/rails:9
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "models" ALTER COLUMN "created_at" TYPE timestamp, ALTER "created_at" DROP NOT NULL[0m
+  ↳ db/migrate/20181201215440_change_timestamp_default_for_models.rb:3
+  [1m[35m (0.1ms)[0m  [1m[35mALTER TABLE "models" ALTER COLUMN "updated_at" TYPE timestamp, ALTER "updated_at" DROP NOT NULL[0m
+  ↳ db/migrate/20181201215440_change_timestamp_default_for_models.rb:4
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20181201215440"]]
+  ↳ bin/rails:9
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  ↳ bin/rails:9
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_advisory_unlock(6420278694242605500)[0m
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(6420278694242605500)[0m
+  ↳ bin/rails:9
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+Migrating to AddHashToModels (20181201224538)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ bin/rails:9
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "models" ADD "hash" character varying[0m
+  ↳ db/migrate/20181201224538_add_hash_to_models.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20181201224538"]]
+  ↳ bin/rails:9
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ bin/rails:9
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_advisory_unlock(6420278694242605500)[0m
+  ↳ bin/rails:9
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(6420278694242605500)[0m
+  ↳ bin/rails:9
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+Migrating to ChangeNameOfHashInModels (20181201225826)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ bin/rails:9
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "models" RENAME COLUMN "hash" TO "name"[0m
+  ↳ db/migrate/20181201225826_change_name_of_hash_in_models.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20181201225826"]]
+  ↳ bin/rails:9
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ bin/rails:9
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  ↳ bin/rails:9
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(6420278694242605500)[0m
+  ↳ bin/rails:9
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
