@@ -1,5 +1,16 @@
+/**
+ *
+ * Slider
+ *
+ * Timeline slider for displaying models over time
+ * TODO: manual click and drag control
+ *
+ */
+
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Moment from 'moment';
 import { colors } from '../../global-styles';
 
 const SliderSt = styled.div`
@@ -31,13 +42,17 @@ const SliderSt = styled.div`
 
 const SliderControlSt = styled.button`
   position: absolute;
-  left: 0;
+  left: ${props => props.pos}%;
+  transform: translateX(-50%);
   top: calc(4px - 20px);
   width: 18px;
   height: 40px;
   border-radius: 8px;
   background-color: #fff;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+  transition: left 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+  cursor: default;
+  outline: none;
 
   .label {
     position: absolute;
@@ -45,6 +60,7 @@ const SliderControlSt = styled.button`
     transform: translateX(-50%);
     font-family: 'Menlo', monospace;
     color: ${colors.tertiary};
+    white-space: nowrap;
   }
 
   .shadows {
@@ -75,57 +91,17 @@ class Slider extends React.PureComponent {
     super();
 
     this.controlRef = React.createRef();
-
-    this.state = {
-      mousedown: false,
-      mx: 0,
-      dx: 0,
-    };
   }
-
-  componentDidMount() {
-    this.controlRef.current.addEventListener('mousedown', this.handleMousedown);
-    window.addEventListener('mouseup', this.handleMouseup);
-    window.addEventListener('mousemove', this.handleMousemove);
-  }
-
-  handleMousedown = e => {
-    const { mousedown } = this.state;
-
-    if (!mousedown) {
-      this.setState({
-        mousedown: true,
-        mx: e.clientX,
-      });
-    }
-  };
-
-  handleMouseup = () => {
-    const { mousedown } = this.state;
-
-    if (mousedown) {
-      this.setState({
-        mousedown: false,
-      });
-    }
-  };
-
-  handleMousemove = e => {
-    const { mousedown } = this.state;
-
-    if (mousedown) {
-      this.setState({
-        mx: e.clientX,
-      });
-    }
-  };
 
   render() {
+    const { pos, time } = this.props;
+    const formattedTime = new Moment(time).format('DD/MM hh:mm');
+
     return (
       <SliderSt>
         <span>START</span>
-        <SliderControlSt type="button" ref={this.controlRef}>
-          <span className="label">16:23</span>
+        <SliderControlSt pos={pos} type="button" ref={this.controlRef}>
+          <span className="label">{formattedTime}</span>
           <div className="shadows" />
         </SliderControlSt>
         <span>LATEST</span>
@@ -133,5 +109,10 @@ class Slider extends React.PureComponent {
     );
   }
 }
+
+Slider.propTypes = {
+  pos: PropTypes.number.isRequired,
+  time: PropTypes.string.isRequired,
+};
 
 export default Slider;
