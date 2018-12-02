@@ -1,35 +1,71 @@
+/*
+ * TestingPage
+ *
+ * This page displays our example marketplace, with the latest ML model data
+ */
+
 import React from 'react';
+import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+
+import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
+
+import { getButtonData, sendButtonData } from './actions';
+import { makeSelectButtonData } from './selectors';
+import reducer from './reducer';
+import saga from './saga';
+
 import rating from '../../images/rating.svg';
 import product from '../../images/product.png';
 import journey from '../../images/journey.png';
 import stroke1 from '../../images/stroke-1.png';
 import stroke2 from '../../images/stroke-2.png';
+
 import { TestingSt, MenuSt, LogoSt, ButtonSt } from './style';
 
-export default class TestingPage extends React.PureComponent {
-  constructor() {
-    super();
+class TestingPage extends React.PureComponent {
+  componentDidMount() {
+    const { onGetButtonData, embedded } = this.props;
 
-    this.labels = [
-      'BUY NOW',
-      'PURCHASE',
-      'ADD TO CART',
-      'ADD TO BASKET',
-      'GET FLAQUE',
-    ];
+    this.startTime = Date.now();
 
-    this.state = {
-      position: this.randomBetween(0, 1),
-      text: this.labels[this.randomBetween(0, this.labels.length - 1)],
-    };
+    // If we're standalone then we need to load the data
+    if (!embedded) {
+      onGetButtonData();
+    }
   }
 
-  randomBetween = (min, max) =>
-    Math.floor(Math.random() * (max - min + 1) + min);
+  /*
+  * Tell the backend that we got a conversion
+  */
+  handleButtonClick = () => {
+    const { onSendButtonData, buttonData } = this.props;
+    // Calculate the time to achieve a click
+    const ctd = Date.now() - this.startTime;
+    // Dummy data for demographics
+    const newButtonData = Object.assign({}, buttonData[0].combination, {
+      age: 24,
+      region: 1,
+      mobile: false,
+      ctd,
+    });
+
+    onSendButtonData(newButtonData);
+  };
 
   render() {
-    const { position, text } = this.state;
+    const { buttonData, embedded, embedButtonData } = this.props;
+    const { text, position } = embedded
+      ? embedButtonData
+      : buttonData[buttonData.length - 1].combination;
 
+    /*
+    * TODO: improve HTML & CSS - built rapidly for POC!
+    */
     return (
       <TestingSt>
         <MenuSt>
@@ -48,8 +84,17 @@ export default class TestingPage extends React.PureComponent {
         <main>
           <div className="container">
             <div className="product">
+              {position === 2 && (
+                <ButtonSt onClick={this.handleButtonClick} type="button">
+                  {text}
+                </ButtonSt>
+              )}
               <img alt="La Flaque de Boue" src={product} />
-              {position === 1 && <ButtonSt type="button">{text}</ButtonSt>}
+              {position === 1 && (
+                <ButtonSt onClick={this.handleButtonClick} type="button">
+                  {text}
+                </ButtonSt>
+              )}
             </div>
             <div className="info">
               <span>La Flaque</span>
@@ -57,6 +102,11 @@ export default class TestingPage extends React.PureComponent {
               <div className="rating">
                 <img src={rating} alt="Rating" />
               </div>
+              {position === 3 && (
+                <ButtonSt onClick={this.handleButtonClick} type="button">
+                  {text}
+                </ButtonSt>
+              )}
               <p>
                 Experience true freshness with La Flaque’s flagship new flavour
                 - &nbsp;
@@ -71,7 +121,11 @@ export default class TestingPage extends React.PureComponent {
                 You’d be a <strong>‘fou’</strong> to miss it.
               </p>
               <span className="price">$2.40 / can</span>
-              {position === 0 && <ButtonSt type="button">{text}</ButtonSt>}
+              {position === 0 && (
+                <ButtonSt onClick={this.handleButtonClick} type="button">
+                  {text}
+                </ButtonSt>
+              )}
             </div>
           </div>
         </main>
@@ -82,3 +136,52 @@ export default class TestingPage extends React.PureComponent {
     );
   }
 }
+
+TestingPage.propTypes = {
+  onGetButtonData: PropTypes.func.isRequired,
+  onSendButtonData: PropTypes.func.isRequired,
+  embedded: PropTypes.bool,
+  embedButtonData: PropTypes.shape({
+    text: PropTypes.string,
+    position: PropTypes.number,
+  }),
+  buttonData: PropTypes.arrayOf(PropTypes.object),
+};
+
+TestingPage.defaultProps = {
+  embedded: false,
+  buttonData: [
+    {
+      combination: {
+        text: 'BUY NOW',
+        position: 0,
+      },
+    },
+  ],
+  embedButtonData: undefined,
+};
+
+export function mapDispatchToProps(dispatch) {
+  return {
+    onGetButtonData: () => dispatch(getButtonData()),
+    onSendButtonData: data => dispatch(sendButtonData(data)),
+  };
+}
+
+const mapStateToProps = createStructuredSelector({
+  buttonData: makeSelectButtonData(),
+});
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+const withReducer = injectReducer({ key: 'buttonData', reducer });
+const withSaga = injectSaga({ key: 'buttonData', saga });
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(TestingPage);

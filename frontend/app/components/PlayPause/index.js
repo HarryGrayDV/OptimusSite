@@ -1,8 +1,21 @@
+/**
+ *
+ * PlayPause
+ *
+ * Play / pause toggle button for running the model timeline
+ *
+ */
+
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
+const ButtonSt = styled.button`
+  outline: none;
+`;
 
 const PlayPause = ({ playing, onClick }) => (
-  <button type="button" onClick={onClick}>
+  <ButtonSt type="button" onClick={onClick}>
     {playing && (
       <svg width="43" height="49" xmlns="http://www.w3.org/2000/svg">
         <path
@@ -17,7 +30,7 @@ const PlayPause = ({ playing, onClick }) => (
         <path d="M0 49V0l43 24.5z" fill="#483547" fillRule="evenodd" />
       </svg>
     )}
-  </button>
+  </ButtonSt>
 );
 
 PlayPause.propTypes = {
