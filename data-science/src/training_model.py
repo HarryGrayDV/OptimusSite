@@ -18,9 +18,9 @@ def baseline_model():
                     kernel_initializer='normal'))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
-    model.add(Dense(64, kernel_initializer='normal', activation='relu'))
-    model.add(Dense(128, kernel_initializer='normal', activation='relu'))
-    model.add(Dense(64, kernel_initializer='normal', activation='relu'))
+    model.add(Dense(8, kernel_initializer='normal', activation='relu'))
+    model.add(Dense(16, kernel_initializer='normal', activation='relu'))
+    model.add(Dense(8, kernel_initializer='normal', activation='relu'))
     model.add(Dense(1, kernel_initializer='normal'))
     # Compile model
     model.compile(loss='mean_squared_error', optimizer='adam')
