@@ -23,7 +23,7 @@ import PlayPause from '../../components/PlayPause';
 
 import { HomeSt, ResultsSt, ControlSt } from './style';
 
-const INTERVAL_SPEED = 2000;
+const INTERVAL_SPEED = 1000;
 
 class HomePage extends React.Component {
   constructor() {
@@ -44,9 +44,14 @@ class HomePage extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { buttonData } = this.props;
 
+    const desktopButtonData = nextProps.buttonData.reduce((list, data) => {
+      if (data.combination[2] === 0) list.push(data);
+      return list;
+    }, []);
+
     // Jump slider to the most recent model
     if (nextProps.buttonData.length !== buttonData.length) {
-      this.setState({ currentIndex: nextProps.buttonData.length - 1 });
+      this.setState({ currentIndex: desktopButtonData.length - 1 });
     }
   }
 
@@ -57,8 +62,13 @@ class HomePage extends React.Component {
     const { currentIndex } = this.state;
     const { buttonData } = this.props;
 
+    const desktopButtonData = buttonData.reduce((list, data) => {
+      if (data.combination[2] === 0) list.push(data);
+      return list;
+    }, []);
+
     // Increment until finished, in which case we cancel the interval
-    if (currentIndex < buttonData.length - 1) {
+    if (currentIndex < desktopButtonData.length - 1) {
       this.setState(prevState => ({
         currentIndex: prevState.currentIndex + 1,
       }));
@@ -78,6 +88,11 @@ class HomePage extends React.Component {
     const { buttonData } = this.props;
     const { playing, currentIndex } = this.state;
 
+    const desktopButtonData = buttonData.reduce((list, data) => {
+      if (data.combination[2] === 0) list.push(data);
+      return list;
+    }, []);
+
     // Use setInterval to manage the model timeline
     if (playing) {
       window.clearInterval(this.interval);
@@ -90,7 +105,7 @@ class HomePage extends React.Component {
         playing: true,
       };
 
-      if (currentIndex === buttonData.length - 1) {
+      if (currentIndex === desktopButtonData.length - 1) {
         newState.currentIndex = 0;
       }
 
@@ -102,7 +117,22 @@ class HomePage extends React.Component {
   render() {
     const { playing, currentIndex } = this.state;
     const { buttonData } = this.props;
-    const currentButtonData = buttonData[currentIndex].combination;
+    const desktopButtonData = buttonData.reduce((list, data) => {
+      if (data.combination[2] === 0) list.push(data);
+      return list;
+    }, []);
+
+    const curr = desktopButtonData[currentIndex].combination;
+    const currentButtonData = {
+      text: curr[0],
+      position: curr[1],
+      ctd: desktopButtonData[currentIndex].ctd,
+    };
+
+    const ctdDifference =
+      (desktopButtonData[0].ctd -
+        desktopButtonData[desktopButtonData.length - 1].ctd) /
+      1000;
 
     return (
       <>
@@ -113,12 +143,17 @@ class HomePage extends React.Component {
         <HomeSt>
           <div>
             <ResultsSt playing={playing}>
+              <div className="ctd">CTD: {currentButtonData.ctd / 1000}s</div>
               <Result currentButtonData={currentButtonData} />
-              <Insights playing={playing} modelCount={buttonData.length} />
+              <Insights
+                playing={playing}
+                modelCount={desktopButtonData.length}
+                ctdDifference={ctdDifference}
+              />
             </ResultsSt>
             <Slider
               time={currentButtonData.created_at}
-              pos={(currentIndex / (buttonData.length - 1)) * 100}
+              pos={(currentIndex / (desktopButtonData.length - 1)) * 100}
             />
             <ControlSt>
               <PlayPause onClick={this.togglePlaying} playing={playing} />
@@ -138,11 +173,7 @@ HomePage.propTypes = {
 HomePage.defaultProps = {
   buttonData: [
     {
-      combination: {
-        text: 'BUY NOW',
-        position: 0,
-        created_at: '2018-12-01T21:30:14.314Z',
-      },
+      combination: ['BUY NOW', 0, 0],
     },
   ],
 };
