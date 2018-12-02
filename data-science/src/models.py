@@ -2,7 +2,6 @@
 import uuid
 
 import numpy as np
-
 import pandas as pd
 from sklearn import preprocessing
 from sklearn.preprocessing import MinMaxScaler
@@ -20,8 +19,6 @@ class ModelActions():
     LE_TXT = preprocessing.LabelEncoder()
 
     # Normalising inputs and outputs
-    IN_SCALER = MinMaxScaler(feature_range=(0, 1))
-    OUT_SCALER = MinMaxScaler(feature_range=(0, 1))
 
     TEXT = TEXT_EXAMPLES
     POSITION = np.arange(10)
@@ -60,22 +57,17 @@ class ModelActions():
 
     def calibrate_scalers(self):
         """Calibrate the scalers, so that the full sample space is used."""
-        full_space = ModelActions.get_full_sample_space()
-
-        full_space['text'] = self.LE_TXT.fit_transform(full_space['text'])
-
-        self.in_scaled = self.IN_SCALER.fit_transform(full_space)
-        self.out_scaled = self.OUT_SCALER.fit_transform(
-            np.array([0, 30000]).reshape(-1, 1))
+        full_space['text'] = self.LE_TXT.fit_transform(TEXT_EXAMPLES)
 
     def normalise(self, data, output=None):
         """Return normalise with the correct scalers."""
         data['text'] = self.LE_TXT.fit_transform(data['text'])
 
-        self.in_scaled = self.IN_SCALER.fit_transform(data)
+        self.in_scaled = data.copy()
+        self.out_scaled = output
 
-        if output is not None:
-            self.out_scaled = self.OUT_SCALER.fit_transform(output)
+        # if output is not None:
+        #     self.out_scaled = self.OUT_SCALER.fit_transform(output)
 
 
 class TrainModel(ModelActions):
@@ -104,8 +96,7 @@ class TrainModel(ModelActions):
 
     def run(self):
         """Run the model."""
-        run_training(self.in_scaled, self.out_scaled, self.IN_SCALER,
-                     self.OUT_SCALER, self.LE_TXT, self.model_hash)
+        run_training(self.in_scaled, self.data['ctd'].copy(), self.model_hash)
 
     def save(self):
         """We save the model hash into the DB."""
@@ -150,6 +141,8 @@ class ModelOptimizer(ModelActions):
         ctd = run_prediction(self.in_scaled, self.IN_SCALER, self.OUT_SCALER,
                              self.LE_TXT, filename)
 
+        print('min and max', ctd.min(), ctd.max())
+
         # we are going to have 2 versions of the optimal params
         # one for mobile, and other for web
         mobile_index = np.where(self.data['mobile'])[0]
@@ -164,14 +157,12 @@ class ModelOptimizer(ModelActions):
 
         print("order", mobile_order)
         print("sorted ctds", ctd[mobile_index[mobile_order]])
-        print('sorted index', mobile_index[mobile_order])
 
-        # print(ctd[mobile_index])
-        # print(mobile_order)
-        # print(ctd[mobile_index][mobile_order])
+        first_mobile_row = mobile_index[mobile_order][0]
+        first_web_row = web_index[web_order][0]
 
-        mobile_params = self.data.loc[mobile_index[mobile_order][0]]
-        web_params = self.data.loc[web_index[web_order][0]]
+        mobile_params = self.data.loc[first_mobile_row]
+        web_params = self.data.loc[first_web_row]
 
         mobile_combinations = mobile_params.to_json(orient='records')
         web_combinations = web_params.to_json(orient='records')
@@ -179,10 +170,10 @@ class ModelOptimizer(ModelActions):
         print(mobile_combinations)
         print(web_combinations)
 
-        # self.save(self.model_mobile.index.tolist()[
-        #           0], ctd[mobile_index][mobile_order][0], mobile_combinations)
-        # self.save(self.model_web.index.tolist()[
-        #           0], ctd[web_index][web_order][0], web_combinations)
+        self.save(self.model_mobile.index.tolist()[
+                  0], ctd[mobile_index[mobile_order]][0], mobile_combinations)
+        self.save(self.model_web.index.tolist()[
+                  0], ctd[web_index[web_order]][0], web_combinations)
 
     def save(self, id, ctd, combination):
         """Save the model in the database."""
