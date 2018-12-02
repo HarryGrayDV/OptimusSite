@@ -10,7 +10,8 @@ import {
 } from './actions';
 
 export function* getButtonData() {
-  const requestURL = 'https://optimus-site-api.herokuapp.com/models/';
+  const requestURL =
+    'http://optimus-production.ef3fapxyeu.us-east-1.elasticbeanstalk.com/models/';
 
   try {
     const response = yield call(request, requestURL);
@@ -21,7 +22,8 @@ export function* getButtonData() {
 }
 
 export function* sendButtonData(buttonData) {
-  const requestURL = 'https://optimus-site-api.herokuapp.com/buttons/';
+  const requestURL =
+    'http://optimus-production.ef3fapxyeu.us-east-1.elasticbeanstalk.com/buttons/';
   const options = {
     method: 'POST',
     headers: {

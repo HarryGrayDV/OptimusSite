@@ -59,9 +59,20 @@ class TestingPage extends React.PureComponent {
 
   render() {
     const { buttonData, embedded, embedButtonData } = this.props;
-    const { text, position } = embedded
-      ? embedButtonData
-      : buttonData[buttonData.length - 1].combination;
+    let { text, position } = embedded ? embedButtonData : '';
+
+    if (!embedded) {
+      const desktopButtonData = buttonData.reduce((list, data) => {
+        if (data.combination[2] === 0) list.push(data);
+        return list;
+      }, []);
+
+      const curr = desktopButtonData[desktopButtonData.length - 1].combination;
+      // eslint-disable-next-line prefer-destructuring
+      text = curr[0];
+      // eslint-disable-next-line prefer-destructuring
+      position = curr[1];
+    }
 
     /*
     * TODO: improve HTML & CSS - built rapidly for POC!
@@ -84,25 +95,35 @@ class TestingPage extends React.PureComponent {
         <main>
           <div className="container">
             <div className="product">
-              {position === 2 && (
+              {position === 8 && (
                 <ButtonSt onClick={this.handleButtonClick} type="button">
                   {text}
                 </ButtonSt>
               )}
               <img alt="La Flaque de Boue" src={product} />
-              {position === 1 && (
+              {position === 7 && (
                 <ButtonSt onClick={this.handleButtonClick} type="button">
                   {text}
                 </ButtonSt>
               )}
             </div>
             <div className="info">
+              {position === 6 && (
+                <ButtonSt onClick={this.handleButtonClick} type="button">
+                  {text}
+                </ButtonSt>
+              )}
               <span>La Flaque</span>
               <h1>de boue</h1>
+              {position === 5 && (
+                <ButtonSt onClick={this.handleButtonClick} type="button">
+                  {text}
+                </ButtonSt>
+              )}
               <div className="rating">
                 <img src={rating} alt="Rating" />
               </div>
-              {position === 3 && (
+              {position === 4 && (
                 <ButtonSt onClick={this.handleButtonClick} type="button">
                   {text}
                 </ButtonSt>
@@ -112,14 +133,29 @@ class TestingPage extends React.PureComponent {
                 - &nbsp;
                 <strong>de boue</strong>.
               </p>
+              {position === 3 && (
+                <ButtonSt onClick={this.handleButtonClick} type="button">
+                  {text}
+                </ButtonSt>
+              )}
               <p>
                 Stirring up dreamy memories of Parisian summers,&nbsp;
                 <strong>de boue</strong> hits the perfect spot between fizz and
                 flavour.
               </p>
+              {position === 2 && (
+                <ButtonSt onClick={this.handleButtonClick} type="button">
+                  {text}
+                </ButtonSt>
+              )}
               <p>
                 You’d be a <strong>‘fou’</strong> to miss it.
               </p>
+              {position === 1 && (
+                <ButtonSt onClick={this.handleButtonClick} type="button">
+                  {text}
+                </ButtonSt>
+              )}
               <span className="price">$2.40 / can</span>
               {position === 0 && (
                 <ButtonSt onClick={this.handleButtonClick} type="button">
@@ -152,10 +188,7 @@ TestingPage.defaultProps = {
   embedded: false,
   buttonData: [
     {
-      combination: {
-        text: 'BUY NOW',
-        position: 0,
-      },
+      combination: ['BUY NOW', 0, 0],
     },
   ],
   embedButtonData: undefined,

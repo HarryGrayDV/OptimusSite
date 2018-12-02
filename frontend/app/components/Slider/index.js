@@ -10,7 +10,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Moment from 'moment';
 import { colors } from '../../global-styles';
 
 const SliderSt = styled.div`
@@ -94,14 +93,12 @@ class Slider extends React.PureComponent {
   }
 
   render() {
-    const { pos, time } = this.props;
-    const formattedTime = new Moment(time).format('DD/MM hh:mm');
+    const { pos } = this.props;
 
     return (
       <SliderSt>
         <span>START</span>
         <SliderControlSt pos={pos} type="button" ref={this.controlRef}>
-          <span className="label">{formattedTime}</span>
           <div className="shadows" />
         </SliderControlSt>
         <span>LATEST</span>
@@ -112,7 +109,6 @@ class Slider extends React.PureComponent {
 
 Slider.propTypes = {
   pos: PropTypes.number.isRequired,
-  time: PropTypes.string.isRequired,
 };
 
 export default Slider;
