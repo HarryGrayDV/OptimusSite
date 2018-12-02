@@ -107,7 +107,7 @@ $ python nlp/twitterscraper.py
 Unfortunately the did not had time to integrate with the NN.
 
 #### Backend
-[See the Readme File](backend/Readme.me)
+[See the Readme File](backend/Readme.md)
 
 
 
