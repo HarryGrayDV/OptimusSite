@@ -15,11 +15,19 @@ def train_model():
     return 'Succesfull', 200
 
 
-@app.route('/synthetic/<int:n>/', methods=['GET'])
-def add_synthetic(n):
+@app.route('/synthetic/biased/<int:n>/', methods=['GET'])
+def add_biased_synthetic(n):
     """Create synthetic data."""
     # start the training
     SyntheticData(n=n)
+    return 'Succesfull', 200
+
+
+@app.route('/synthetic/unbiased/<int:n>/', methods=['GET'])
+def add_unbiased_synthetic(n):
+    """Create synthetic data."""
+    # start the training
+    SyntheticData(n=n, bias=False)
     return 'Succesfull', 200
 
 

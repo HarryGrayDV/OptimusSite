@@ -5,31 +5,29 @@ import tensorflow as tf
 from tensorflow.contrib.layers import dropout
 
 import src.helpers as h
+from sklearn.externals import joblib
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 # ENVIRONMENT VARS
-VERSION = 1
-MODEL_NAME = "optimusai"
-MODEL_PATH = "trained_models"
-SAVE_PATH = MODEL_PATH + "/" + MODEL_NAME
+SAVE_PATH = "trained_models/"
 # NN Params
 test_size = 0.3
 
 learning_rate = 0.001
-n_epochs = 1500
-keep_prob = 0.6
+n_epochs = 1000
 
 n_inputs = 6
 n_outputs = 1
 
-l1_nodes = 4
-l2_nodes = 4
+l1_nodes = 256
+l2_nodes = 128
+l3_nodes = 64
 
 # Graph definition
 
 
-def run_training(in_scaled, out_scaled, in_scaler, out_scaler, le_txt):
+def run_training(in_scaled, out_scaled, in_scaler, out_scaler, le_txt, model_version):
     # Defining Neural Network
     '''
     Since the relationship between the clickability of the button and its parametres is not know
@@ -49,7 +47,7 @@ def run_training(in_scaled, out_scaled, in_scaler, out_scaler, le_txt):
     '''
 
     tf.reset_default_graph()
-
+    keep_prob = tf.placeholder_with_default(1.0, shape=(), name='keep_prob')
     # Input Layer
     with tf.variable_scope("inputs"):
         X = tf.placeholder(tf.float32, shape=[None, n_inputs], name='input')
@@ -71,24 +69,31 @@ def run_training(in_scaled, out_scaled, in_scaler, out_scaler, le_txt):
 
         l2_out = tf.nn.relu(tf.matmul(l1_drop, w2) + b2, name='l2_output')
 
-        Y = tf.placeholder(tf.float32, shape=[None, 1], name='target')
-        l2_loss = 0.01 * tf.nn.l2_loss(w1) + 0.01 * tf.nn.l2_loss(w2)
+    with tf.variable_scope("layer3"):
+        l2_drop = dropout(l2_out, keep_prob)
+        w3 = tf.get_variable(name='w3', shape=[
+                             l2_nodes, l3_nodes], initializer=tf.contrib.layers.xavier_initializer())
+        b3 = tf.get_variable(
+            name='b3', shape=[l3_nodes], initializer=tf.zeros_initializer)
+
+        l3_out = tf.nn.relu(tf.matmul(l2_drop, w3) + b3, name='l3_output')
 
     # Output Layer
     with tf.variable_scope("output"):
-        l2_drop = dropout(l2_out, keep_prob)
+        l3_drop = dropout(l3_out, keep_prob)
         weights = tf.get_variable(name='wo', shape=[
-                                  l2_nodes, n_outputs], initializer=tf.contrib.layers.xavier_initializer())
+                                  l3_nodes, n_outputs], initializer=tf.contrib.layers.xavier_initializer())
         biases = tf.get_variable(
             name='bo', shape=[n_outputs], initializer=tf.zeros_initializer)
 
-        prediction = tf.add(tf.matmul(l2_drop, weights),
+        prediction = tf.add(tf.matmul(l3_drop, weights),
                             biases, name='prediction')
 
-    ### Optimizer and Cost
+    # Optimizer and Cost
     with tf.variable_scope("cost"):
         Y = tf.placeholder(tf.float32, shape=[None, 1], name='target')
-        l2_loss = 0.01 * tf.nn.l2_loss(w1) + 0.01 * tf.nn.l2_loss(w2)
+        l2_loss = 0.01 * tf.nn.l2_loss(w1) + 0.01 * \
+            tf.nn.l2_loss(w2) + 0.01 * tf.nn.l2_loss(w3)
         cost = tf.add(tf.reduce_mean(tf.squared_difference(
             prediction, Y)), l2_loss, name='cost')
 
@@ -111,37 +116,33 @@ def run_training(in_scaled, out_scaled, in_scaler, out_scaler, le_txt):
 
             if epoch % 100 == 0:
                 training_cost = session.run(
-                    cost, feed_dict={X: in_training, Y: out_training})
+                    cost, feed_dict={X: in_training, Y: out_training, keep_prob: 1})
                 testing_cost = session.run(
                     cost, feed_dict={X: in_test, Y: out_test})
                 print("PASS: {} || Training accuracy: {:0.2f}% | Training accuracy: {:0.2f}%".format(
                     epoch, 100 * (1 - training_cost), 100 * (1 - testing_cost)))
 
         print("Training complete")
-        params_saver = saver.save(session, SAVE_PATH)
+        params_saver = saver.save(
+            session, "{}{}".format(SAVE_PATH, model_version))
 
 
-def run_prediction(in_scaled, in_scaler, le_txt, model_version):
+def run_prediction(in_scaled, in_scaler, out_scaler, le_txt, model_version):
     print("Restoring model")
-    checkpoint = tf.train.latest_checkpoint(MODEL_PATH)
-    should_train = checkpoint == None
-    print(checkpoint)
+    mpath = "{}{}".format(SAVE_PATH, model_version)
+    checkpoint = tf.train.latest_checkpoint(mpath)
 
     with tf.Session() as session:
         session.run(tf.global_variables_initializer())
-
         # Importing the graph
         graph = tf.get_default_graph()
-        saver = tf.train.import_meta_graph(checkpoint + '.meta')
+        saver = tf.train.import_meta_graph(mpath + '.meta')
         # Importing the params
-        saver.restore(session, checkpoint)
+        saver.restore(session, mpath)
+        prediction = graph.get_tensor_by_name("output/prediction:0")
 
-        # test_input_raw = ["get involved!", 1, 1, 24, 1, 3]
-        # print("Executing the model for str({})".format(test_input_raw))
-        # test_input = test_input_raw
-        # test_input[0] = le_txt.fit_transform([test_input_raw[0]])[0]
-        # scaled_input = in_scaler.fit_transform([test_input])
-        # ctd = np.array(out_scaler.inverse_transform(session.run(
-        #     prediction, feed_dict={'inputs/input:0': scaled_input})))[0][0]
-        # print(ctd)
-        # print("Predicted ctd of {:0.2f}".format(ctd))
+        ctd = np.array(out_scaler.inverse_transform(session.run(
+            prediction, feed_dict={'inputs/input:0': in_scaled})))
+
+        print(ctd.T[0].min(), ctd.T[0].max())
+        return ctd.T[0]
