@@ -4,7 +4,6 @@ import uuid
 import numpy as np
 import pandas as pd
 from sklearn import preprocessing
-from sklearn.preprocessing import MinMaxScaler
 from src.misc import TEXT_EXAMPLES, DBConnection
 from src.training_model import run_prediction, run_training
 
@@ -18,8 +17,7 @@ class ModelActions():
     # Encoding the labels
     LE_TXT = preprocessing.LabelEncoder()
 
-    # Normalising inputs and outputs
-
+    # Get all the inputs
     TEXT = TEXT_EXAMPLES
     POSITION = np.arange(10)
     MOBILE = np.arange(2)
@@ -57,7 +55,7 @@ class ModelActions():
 
     def calibrate_scalers(self):
         """Calibrate the scalers, so that the full sample space is used."""
-        full_space['text'] = self.LE_TXT.fit_transform(TEXT_EXAMPLES)
+        self.LE_TXT.fit_transform(TEXT_EXAMPLES)
 
     def normalise(self, data, output=None):
         """Return normalise with the correct scalers."""
@@ -65,9 +63,6 @@ class ModelActions():
 
         self.in_scaled = data.copy()
         self.out_scaled = output
-
-        # if output is not None:
-        #     self.out_scaled = self.OUT_SCALER.fit_transform(output)
 
 
 class TrainModel(ModelActions):
@@ -100,6 +95,7 @@ class TrainModel(ModelActions):
 
     def save(self):
         """We save the model hash into the DB."""
+        # We just want to have different models being optimized for mobile and web
         tosave = pd.DataFrame({'name': [self.model_hash], 'mobile': True})
         tosave.to_sql(
             self.MODEL_TABLE, self.db_connection.engine, if_exists='append', index=False)
@@ -138,8 +134,7 @@ class ModelOptimizer(ModelActions):
     def run(self):
         """Run through a range of combination of the parameters."""
         filename = self.model_mobile['name'].iloc[0]
-        ctd = run_prediction(self.in_scaled, self.IN_SCALER, self.OUT_SCALER,
-                             self.LE_TXT, filename)
+        ctd = run_prediction(self.in_scaled, filename)
 
         print('min and max', ctd.min(), ctd.max())
 

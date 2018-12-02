@@ -1,6 +1,5 @@
 """Used independly to be able to iterate models fast."""
 import numpy as np
-import tensorflow as tf
 from keras import backend as K
 from keras.layers import Activation, Dense
 from keras.layers.normalization import BatchNormalization
@@ -30,13 +29,13 @@ def baseline_model():
 
 
 def run_training(in_scaled, out_scaled, model_version):
-    '''
+    """
     Train the NN.
 
     in_scaled is a pandas dataframe the scaled the button text
 
     It saves a model in the filesystem
-    '''
+    """
 
     np.random.seed(seed)
 
