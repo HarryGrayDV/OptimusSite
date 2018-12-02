@@ -13,17 +13,20 @@
   Using the standard Rails API middleware (and a puma rack web server). Our API responds with json. In dev, our puma web server listens on port 3000. To run our server in development, go to
   ```http://localhost:3000/ add-the-relevant-endpoint-route-here```
 
-* API URL
+* Launching development server
+  - ```rails server```
+  - Can use postman to GET and POST data
+
+* API Base URL
 ```optimus-production.ef3fapxyeu.us-east-1.elasticbeanstalk.com```
 
 * API Endpoints:
-  ```GET``` a list of all the buttons data: ```/buttons ```
-  ```POST``` a new data point for a button to optimize: ```/buttons```
-  ```GET``` a list of all the optimized data models for buttons on mobile devices, as computed by our data science app: ```/models/mobile```
-  ```GET``` a list of all the optimized data models for buttons on traditional, larger web devices, as computed by our data science app: ```/models/web```
+  - ```GET``` a list of all the buttons data: ```/buttons ```
+  - ```POST``` a new data point for a button to optimize: ```/buttons```
+  - ```GET``` a list of all the optimized data models for buttons, as computed by our data science app: ```/models```
 
 * Gem Management
-  We used ```Bundler``` to provide a consistent environment for our Ruby gems used. Bundler helps track and install the exact gems and verisons used by our API in dev and prod.
+  We used ```Bundler``` to provide a consistent environment for our Ruby gems used. Bundler helps track and install the exact gems and verisons used by our API in dev and prod. Please make sure that is installed, along with the depenedencies. ```gem install bundler``` and ```bundle install```, ```bundle update```.
 
 * Database
   On production: RDS AWS hosted Postgresql database (version 10.6).
