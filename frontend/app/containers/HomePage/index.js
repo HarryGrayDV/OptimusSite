@@ -26,12 +26,13 @@ import { HomeSt, ResultsSt, ControlSt } from './style';
 const INTERVAL_SPEED = 1000;
 
 class HomePage extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       currentIndex: 0,
       playing: false,
+      desktopButtonData: props.buttonData,
     };
   }
 
@@ -44,6 +45,7 @@ class HomePage extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { buttonData } = this.props;
 
+    // For the case of demo, grab the model data for desktop
     const desktopButtonData = nextProps.buttonData.reduce((list, data) => {
       if (data.combination[2] === 0) list.push(data);
       return list;
@@ -51,7 +53,10 @@ class HomePage extends React.Component {
 
     // Jump slider to the most recent model
     if (nextProps.buttonData.length !== buttonData.length) {
-      this.setState({ currentIndex: desktopButtonData.length - 1 });
+      this.setState({
+        desktopButtonData,
+        currentIndex: desktopButtonData.length - 1,
+      });
     }
   }
 
@@ -59,13 +64,7 @@ class HomePage extends React.Component {
   * Called on an interval to step through models
   */
   nextModel = () => {
-    const { currentIndex } = this.state;
-    const { buttonData } = this.props;
-
-    const desktopButtonData = buttonData.reduce((list, data) => {
-      if (data.combination[2] === 0) list.push(data);
-      return list;
-    }, []);
+    const { currentIndex, desktopButtonData } = this.state;
 
     // Increment until finished, in which case we cancel the interval
     if (currentIndex < desktopButtonData.length - 1) {
@@ -85,13 +84,7 @@ class HomePage extends React.Component {
   * Play / pause button click handler
   */
   togglePlaying = () => {
-    const { buttonData } = this.props;
-    const { playing, currentIndex } = this.state;
-
-    const desktopButtonData = buttonData.reduce((list, data) => {
-      if (data.combination[2] === 0) list.push(data);
-      return list;
-    }, []);
+    const { playing, currentIndex, desktopButtonData } = this.state;
 
     // Use setInterval to manage the model timeline
     if (playing) {
@@ -115,12 +108,7 @@ class HomePage extends React.Component {
   };
 
   render() {
-    const { playing, currentIndex } = this.state;
-    const { buttonData } = this.props;
-    const desktopButtonData = buttonData.reduce((list, data) => {
-      if (data.combination[2] === 0) list.push(data);
-      return list;
-    }, []);
+    const { playing, currentIndex, desktopButtonData } = this.state;
 
     const curr = desktopButtonData[currentIndex].combination;
     const currentButtonData = {

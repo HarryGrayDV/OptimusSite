@@ -60,18 +60,24 @@ class TestingPage extends React.PureComponent {
   render() {
     const { buttonData, embedded, embedButtonData } = this.props;
     let { text, position } = embedded ? embedButtonData : '';
+    // Default to desktop
+    let target = 0;
 
     if (!embedded) {
-      const desktopButtonData = buttonData.reduce((list, data) => {
-        if (data.combination[2] === 0) list.push(data);
+      // Show the mobile model
+      if (window.innerWidth < 768) {
+        target = 1;
+      }
+
+      const deviceButtonData = buttonData.reduce((list, data) => {
+        if (data.combination[2] === target) list.push(data);
         return list;
       }, []);
 
-      const curr = desktopButtonData[desktopButtonData.length - 1].combination;
-      // eslint-disable-next-line prefer-destructuring
-      text = curr[0];
-      // eslint-disable-next-line prefer-destructuring
-      position = curr[1];
+      if (deviceButtonData.length > 0) {
+        const curr = deviceButtonData[deviceButtonData.length - 1].combination;
+        [text, position] = curr;
+      }
     }
 
     /*
@@ -115,7 +121,7 @@ class TestingPage extends React.PureComponent {
               )}
               <span>La Flaque</span>
               <h1>de boue</h1>
-              {position === 5 && (
+              {position === 4 && (
                 <ButtonSt onClick={this.handleButtonClick} type="button">
                   {text}
                 </ButtonSt>
@@ -123,7 +129,7 @@ class TestingPage extends React.PureComponent {
               <div className="rating">
                 <img src={rating} alt="Rating" />
               </div>
-              {position === 4 && (
+              {position === 5 && (
                 <ButtonSt onClick={this.handleButtonClick} type="button">
                   {text}
                 </ButtonSt>
@@ -143,7 +149,7 @@ class TestingPage extends React.PureComponent {
                 <strong>de boue</strong> hits the perfect spot between fizz and
                 flavour.
               </p>
-              {position === 2 && (
+              {position === 0 && (
                 <ButtonSt onClick={this.handleButtonClick} type="button">
                   {text}
                 </ButtonSt>
@@ -157,7 +163,7 @@ class TestingPage extends React.PureComponent {
                 </ButtonSt>
               )}
               <span className="price">$2.40 / can</span>
-              {position === 0 && (
+              {position === 2 && (
                 <ButtonSt onClick={this.handleButtonClick} type="button">
                   {text}
                 </ButtonSt>
