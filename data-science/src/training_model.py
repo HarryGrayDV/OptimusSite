@@ -55,6 +55,9 @@ def run_prediction(in_scaled, model_version):
 
     # load the query model and predict the input
     model = load_model('{}.h5'.format(mpath))
+
+    print(model.summary())
+
     prediction = model.predict(in_scaled)
 
     K.clear_session()
